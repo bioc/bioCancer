@@ -1,0 +1,18 @@
+FIRST RELEASE
+    o Package released
+    o Omit R/code menu: request shinyAce (>=0.2.1)
+      - Omit help_and_report function
+    o Various issues request DT (>=0.1.39)
+      - Omit Show Plot in Pivot sidebar menu
+      - Can not download/Store correctly  filtered table in Handle/View
+
+
+
+PERSPECTIVE
+    o Release R 3.4 import(shiny, except= c("dataTableOutput", "renderDataTable"))
+    o use DisGeNet server despite /extdata/disGeNet file (DONE Not Working)
+    o clusterProfiler GMT file:
+    http://www.r-bloggers.com/go-analysis-using-clusterprofiler/
+    o gene classification using rpart,ggplot2, ggtree:
+    http://guangchuangyu.github.io/2016/01/annotate-a-phylogenetic-tree-with-insets/
+    o Specify the range of mutation frequency in circos plot [Min, Max]

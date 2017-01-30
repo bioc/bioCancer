@@ -12,10 +12,34 @@ output$ui_filter_error <- renderUI({
 output$Welcome <- renderUI({
   wellPanel(
     h5("Welcome to bioCancer!", align="center"),
-    HTML("Help is available on each page by clicking the <i title='Help' class='fa fa-question'></i> icon on the bottom left of your screen.")
+    HTML("Help is available on each page by clicking the <i title='Help' class='fa fa-question'></i> icon on the bottom left of your screen."),
+    checkboxInput(
+      'overview_id', 'Pipeline Overview', value = FALSE
+    )
   )
 })
 
+output$pipeline <- renderUI({
+  tagList(
+  h4("Schematic view of bioCancer pipeline:"),
+  h5(" The pipeline consists of three major panels:"),
+  h5("1- Portal loads own gene list and explore profiles data of cancer studies."),
+  h5("2- Processing exchanges data with user computer, Portal section, and Circomics tab.
+     It provides useful tools for pre-processing, processing, and plotting graphs."),
+  h5("3- Enrichment integrates methods for classification and clustering and displays the results as interactive graphs.")
+  )
+})
+
+output$overview <- renderImage({
+
+  list(src = file.path(r_path,"base/tools/help/figures/overview_methods.png"),
+       contentType = 'image/png',
+       width = 600,
+       height = 500,
+       deleteFile = FALSE,
+       alt = "This is alternate text"
+       )}, deleteFile = FALSE
+)
 ## data ui and tabs
 output$ui_data <- renderUI({
 
@@ -26,7 +50,6 @@ output$ui_data <- renderUI({
 
     sidebarLayout(
       sidebarPanel(
-
         #### Include selectize prompt Studies, Clinical data and Profile data
         conditionalPanel("input.tabs_data== 'Portal'",
                          conditionalPanel("input.tabs_portal=='Studies'",
@@ -49,29 +72,30 @@ output$ui_data <- renderUI({
                          conditionalPanel("input.tabs_portal == 'Profiles'", uiOutput("ui_ProfData")),
                          conditionalPanel("input.tabs_portal == 'Mutation'", uiOutput("ui_MutData"))
         ),
-        conditionalPanel("input.tabs_data== 'Enrich'",
-                         conditionalPanel("input.tabs_Enrich == 'Circomics'",
+        conditionalPanel("input.tabs_data == 'Enrichment'",
+                         conditionalPanel("input.tabs_Enrichment == 'Circomics'",
                                           uiOutput("ui_Circomics")),
-                         #                          conditionalPanel("input.tabs_Enrich=='Network'",
+                         #                          conditionalPanel("input.tabs_Enrichment=='Network'",
                          #                                           wellPanel(
                          #                                             uiOutput("ui_NetworkSlider"),
                          #                                             uiOutput("ui_Provider")
                          #                                           )),
 
-                         conditionalPanel("input.tabs_Enrich=='Classifier'",
+                         conditionalPanel("input.tabs_Enrichment =='Classifier'",
                                           uiOutput("ui_Classifier")
                          ),
 
-                         conditionalPanel("input.tabs_Enrich=='Reactome'",
+                         conditionalPanel("input.tabs_Enrichment =='Networking'",
                                           uiOutput("ui_Reactome")
+                         )
+                         # conditionalPanel("input.tabs_Enrichment=='Network'",
+                         #                  uiOutput("ui_Network")
+                         # )
                          ),
-                         conditionalPanel("input.tabs_Enrich=='Network'",
-                                          uiOutput("ui_Network")
-                         )),
 
-        conditionalPanel("input.tabs_data== 'Handle'",
+        conditionalPanel("input.tabs_data== 'Processing'",
                          #
-                         #                          conditionalPanel("input.tabs_Handle=='Manage'",
+                         #                          conditionalPanel("input.tabs_Processing=='Manage'",
                          #                                           uiOutput("Welcome")
                          #
                          #                          ),
@@ -80,9 +104,9 @@ output$ui_data <- renderUI({
                          uiOutput("ui_datasets"),
 
                          conditionalPanel(
-                           "input.tabs_Handle != 'Manage'",
+                           "input.tabs_Processing != 'Manage'",
                            checkboxInput(
-                             'show_filter', 'Filter (e.g., price > 5000)', value = state_init("show_filter",FALSE)
+                             'show_filter', 'Filter (e.g., CNA == -1)', value = state_init("show_filter",FALSE)
                            ),
                            conditionalPanel(
                              "input.show_filter == true",
@@ -94,26 +118,33 @@ output$ui_data <- renderUI({
                          )
         ),
 
-        conditionalPanel("input.tabs_data == 'Handle'",
+        conditionalPanel("input.tabs_data == 'Processing'",
 
-                         conditionalPanel("input.tabs_Handle == 'Manage'", uiOutput("ui_Manage")),
-                         conditionalPanel("input.tabs_Handle == 'View'", uiOutput("ui_View")),
-                         conditionalPanel("input.tabs_Handle == 'Visualize'", uiOutput("ui_Visualize")),
-                         conditionalPanel("input.tabs_Handle == 'Pivot'",uiOutput("ui_Pivotr")),
-                         conditionalPanel("input.tabs_Handle == 'Explore'",uiOutput("ui_Explore")),
-                         conditionalPanel("input.tabs_Handle == 'Transform'", uiOutput("ui_Transform")),
-                         conditionalPanel("input.tabs_Handle == 'Combine'", uiOutput("ui_Combine"))
+                         conditionalPanel("input.tabs_Processing == 'Manage'", uiOutput("ui_Manage")),
+                         conditionalPanel("input.tabs_Processing == 'View'", uiOutput("ui_View")),
+                         conditionalPanel("input.tabs_Processing == 'Visualize'", uiOutput("ui_Visualize")),
+                         conditionalPanel("input.tabs_Processing == 'Pivot'",uiOutput("ui_Pivotr")),
+                         conditionalPanel("input.tabs_Processing == 'Explore'",uiOutput("ui_Explore")),
+                         conditionalPanel("input.tabs_Processing == 'Transform'", uiOutput("ui_Transform")),
+                         conditionalPanel("input.tabs_Processing == 'Combine'", uiOutput("ui_Combine"))
 
         )
 
       ),
       mainPanel(
+        conditionalPanel("input.overview_id == true",
+                         uiOutput("pipeline"),
+                         imageOutput("overview")
+        ),
+
+        tags$hr(),
+
         tabsetPanel(
           id = "tabs_data",
 
           tabPanel("Portal", uiOutput("Portal")),
-          tabPanel("Enrich", uiOutput("Enrich")),
-          tabPanel("Handle", uiOutput("Handle"))
+          tabPanel("Processing", uiOutput("Processing")),
+          tabPanel("Enrichment", uiOutput("Enrichment"))
 
 
 
@@ -140,10 +171,9 @@ output$Portal <- renderUI({
   )
 })
 
-output$Enrich <- renderUI({
+output$Enrichment <- renderUI({
 
-  tabsetPanel(id = "tabs_Enrich",
-
+  tabsetPanel(id = "tabs_Enrichment",
               tabPanel("Circomics",
                        #                        if('CNA' %in% input$CircosDimensionID ){
                        #                          plot_downloader("SaveMetabologram_CNA", pre = "")
@@ -217,24 +247,24 @@ output$Enrich <- renderUI({
               #                        networkD3::forceNetworkOutput("forceNetwork")
               #               ),
               tabPanel("Classifier",
-                       conditionalPanel("input.ClassID=='None'",
+                       #conditionalPanel("input.ClassID=='None'",
+                       conditionalPanel("input.runSamplingBox == false",
                                         verbatimTextOutput("ClassifierHowto")
                        ),
-                       conditionalPanel("input.ClassID =='Samples'",
-                                        h4("Enter sampling size smaller than in Case"),
+                       #conditionalPanel("input.ClassID =='Samples' && input.runClassificationBox == false",
+                       conditionalPanel("input.runSamplingBox == true && input.runClassificationBox == false",
+                                        h4("Enter sampling size smaller than in Cases"),
                                         #tableOutput("viewTableCases"),
-                                        DT::dataTableOutput("viewTableCases"),
-                                        #verbatimTextOutput("SampleSize"),
-                                        #verbatimTextOutput("ClassifierThreshold"),
-                                        #selectizeInput('StudiesIDClassifier', 'Studies Classification', choices=NULL, multiple = TRUE),
-                                        h4("Filtering Studies with mRNA data", align="center"),
-                                        fluidRow(
-                                          column(6,
-                                                 uiOutput("list_Cases")),
-                                          column(6,
-                                                 uiOutput("list_GenProfs")
-                                          )
-                                        )
+                                        DT::dataTableOutput("viewTableCases")
+
+                                        # h4("Filtering Studies with mRNA data", align="center"),
+                                        # fluidRow(
+                                        #   column(6,
+                                        #          uiOutput("list_Cases")),
+                                        #   column(6,
+                                        #          uiOutput("list_GenProfs")
+                                        #   )
+                                        # )
 
                                         # chooserInput("mychooser", "Available frobs", "Selected frobs",
                                         #              row.names(USArrests), c(), size = 10, multiple = TRUE
@@ -244,7 +274,8 @@ output$Enrich <- renderUI({
 
 
                        ),
-                       conditionalPanel("input.ClassID =='Classifier'",
+                       #conditionalPanel("input.ClassID == 'Classifier'",
+                       conditionalPanel("input.runClassificationBox == true",
                                         downloadLink("dl_GenesClassDetails_tab", "", class = "fa fa-download alignright"),
                                         #tableOutput("viewTablegetGenesClassifier")),
                                         DT::dataTableOutput("getGenesClassifier"),
@@ -256,7 +287,7 @@ output$Enrich <- renderUI({
                                                          plot_downloader("Plot_enrich", pre = ""),
                                                          plotOutput("Plot_enricher")
                                         ),
-                                        conditionalPanel("input.ClusterPlotsID=='Disease Onthology'",
+                                        conditionalPanel("input.ClusterPlotsID=='Disease Ontology'",
                                                          h4("Diseases Studies Genes associations", align='center'),
                                                          plot_downloader("compareClusterDO", pre=""),
                                                          plotOutput("compareClusterDO")
@@ -267,7 +298,7 @@ output$Enrich <- renderUI({
                                                          plotOutput("compareClusterReactome")
                                         ),
                                         conditionalPanel("input.ClusterPlotsID=='GO'",
-                                                         h4("Gene Ontholgy Studies associations", align='center'),
+                                                         h4("Cancer / Gene Ontolgy associations", align='center'),
                                                          plot_downloader("compareClusterGO", pre=""),
                                                          plotOutput("compareClusterGO")
                                         ),
@@ -284,7 +315,7 @@ output$Enrich <- renderUI({
                        )
                        #)
               ),
-              tabPanel("Reactome",
+              tabPanel("Networking",
                        conditionalPanel(condition = "input.ReacRunId == false",
                                         verbatimTextOutput("ReactomeHowto")
                        ),
@@ -321,9 +352,10 @@ output$Enrich <- renderUI({
                        conditionalPanel( condition = "input.NetworkRunId== true",
                                          visNetwork::visNetworkOutput("network",height = "600px")
                        ),
-                       conditionalPanel(condition = "input.getlistProfDataID ==true",
+                       conditionalPanel(condition = "input.getlistProfDataIDReactome ==true",
                                         h3("Loaded Profiles Data", align="center"),
-                                        verbatimTextOutput("StrListProfData")
+                                        #uiOutput("StrListProfDataCircos")
+                                        verbatimTextOutput("StrListProfDataReactome")
                                         #htmlOutput("StrListProfData")
 
 
@@ -351,8 +383,8 @@ output$Enrich <- renderUI({
 
 })
 
-output$Handle <- renderUI({
-  tabsetPanel(id = "tabs_Handle",
+output$Processing <- renderUI({
+  tabsetPanel(id = "tabs_Processing",
               tabPanel(
                 "Manage", htmlOutput("htmlDataExample"),
                 conditionalPanel("input.man_add_descr == false", uiOutput("dataDescriptionHTML")),

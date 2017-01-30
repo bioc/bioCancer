@@ -29,10 +29,13 @@ output$ui_ProfData <- renderUI({
   list(
 
     wellPanel(
+      conditionalPanel("input.GeneListID == 'DNA_damage_Response' && input.loadClipProf_GeneList%2 == 1",
+                        p("Gene List is empty!",align="center",style = "color:red")
+                       ),
 
       radioButtons(inputId = "loadGeneListID_ProfData", label = "Load Gene List:",
                    c( "examples" = "ExampleGeneList_ProfData",  "clipboard" = "clipboard_GeneList_ProfData"),
-                   selected = "Genes", inline = TRUE),
+                   selected = state_multiple("loadGeneListID_ProfData", "DNA_damage_Response"), inline = TRUE),
 
       conditionalPanel(condition = "input.loadGeneListID_ProfData == 'clipboard_GeneList_ProfData'",
                        actionButton('loadClipProf_GeneList', 'Paste Gene List')
@@ -49,11 +52,11 @@ output$ui_ProfData <- renderUI({
   ),
 
   wellPanel(
-    checkboxInput(inputId = "ProfData", "Load Profile to Datasets" ,value = FALSE),
+    checkboxInput(inputId = "ProfData", "Export for Processing" ,value = FALSE),
    # radioButtons(inputId = "ProfData", label = "Load ProfData to Datasets:",
     #             c("ProfData"="ProfData"), selected = "ProfData", inline =TRUE),
     conditionalPanel(condition = "input.ProfData == true",
-                     actionButton('loadProfData', 'Load Profiles Table'))
+                     actionButton('loadProfData', 'Export to Datasets', icon('arrow-up')))
   ),
     help_modal_km('Profiles Data','ProfilesHelp',inclMD(file.path(r_path,"base/tools/help/Profiles.md")))
   )
@@ -86,13 +89,14 @@ observe({
   # 'reading' data from clipboard
   if (not_pressed(input$loadClipProf_GeneList)) return()
   isolate({
-    loadClipboard_GeneList()
+    loadClipboard_GeneList(tab=input$loadClipProf_GeneList)
     updateRadioButtons(session = session, inputId = "GeneListID",
                        label = "Paste Genes:",
                        c( "examples" = "ExampleGeneList",  "clipboard" = "clipboard_GeneList"),
-                       selected = "Genes", inline = TRUE)
+                       #selected = "Genes",
+                       inline = TRUE)
     updateSelectInput(session, "GeneListID", label = "Pasted Genes:",
-                      choices = r_data$genelist, selected = "Genes")
+                      choices = r_data$genelist)
   })
 })
 

@@ -8,15 +8,18 @@ output$CircomicsHowto <- renderPrint({
       ")
 })
 
-observe({
-  if(not_pressed(input$loadListProfDataCircosId)) return()
-  isolate({
-    shiny::withProgress(message = 'loading Profiles Data... ', value = 0.1, {
-      Sys.sleep(0.25)
-      getListProfData(panel='Circomics',input$GeneListID)
-    })
-  })
-})
+
+### It is not necessary. le ListProfData is loaded when the output$StrListProfDataCircos <- renderPrint({}) is printed
+# observe({
+#   if(not_pressed(input$loadListProfDataCircosId)) return()
+#   isolate({
+#     shiny::withProgress(message = 'loading Profiles Data... ', value = 0.1, {
+#       Sys.sleep(0.25)
+#       getListProfData(panel='Circomics',input$GeneListID)
+#     })
+#
+#   })
+# })
 
 
 observe({
@@ -30,11 +33,11 @@ observe({
     }
     if(input$UserDataMet27ID){
       r_data$ListProfData$Met_HM27[['UserData']] <- r_data[[input$UserData_MetHM27_id]][-1]
-      r_data$ListMetData$HM27[['UserData']] <- r_data[[input$UserData_MetHM27_id]]
+      r_data$ListMetData$HM27[['UserData']] <- r_data[[input$UserData_MetHM27_id]][-1]
     }
     if(input$UserDataMet450ID){
       r_data$ListProfData$Met_HM450[['UserData']] <- r_data[[input$UserData_MetHM450_id]][-1]
-      r_data$ListMetData$HM450[['UserData']] <- r_data[[input$UserData_MetHM450_id]]
+      r_data$ListMetData$HM450[['UserData']] <- r_data[[input$UserData_MetHM450_id]][-1]
     }
     if(input$UserDatamiRNAID){
       r_data$ListProfData$miRNA[['UserData']] <- r_data[[input$UserData_miRNA_id]][-1]
@@ -64,21 +67,21 @@ observe({
 })
 
 
-output$StrProfData <- renderPrint({
-
-                   r_data$ListProfData$CNA[['UserData']] <- r_data[[input$UserData_CNA_id]]
-                   #cat("PROFILES DATA:\n",str(r_data$ListProfData$CNA),sep = " " )
-
-})
-
-output$CNATable <- DT::renderDataTable({
-  #r_data$ListProfData$CNA[['UserData']] <- r_data[[input$UserData_CNA_id]]
-
-  dat <- r_data[[input$UserData_CNA_id]]
-
-  displayTable(dat)
-
-})
+# output$StrProfData <- renderPrint({
+#
+#                    r_data$ListProfData$CNA[['UserData']] <- r_data[[input$UserData_CNA_id]]
+#                    #cat("PROFILES DATA:\n",str(r_data$ListProfData$CNA),sep = " " )
+#
+# })
+#
+# output$CNATable <- DT::renderDataTable({
+#   #r_data$ListProfData$CNA[['UserData']] <- r_data[[input$UserData_CNA_id]]
+#
+#   dat <- r_data[[input$UserData_CNA_id]]
+#
+#   displayTable(dat)
+#
+# })
 
 
 ## get Wheel for Profiles Data
@@ -169,7 +172,7 @@ output$getCoffeeWheel_Mut <- renderCoffeewheel({
     print("Start getting Frequency of Mutation ...")
     Freq_DfMutData <- getFreqMutData(list = r_data$ListMutData, geneListLabel = input$GeneListID)
     print("End getting Mutation Frequency...")
-    listMut_df <- apply(r_data$Freq_DfMutData,2,function(x)as.data.frame(t(x)))
+    listMut_df <- apply(Freq_DfMutData,2,function(x)as.data.frame(t(x)))
     TreeMutData <- reStrDisease(listMut_df)
     coffeewheel(TreeMutData, width=600, height=600, main="Mutation Frequency: (Min,Max)")
   })

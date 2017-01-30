@@ -1,5 +1,5 @@
 output$ui_Studies <- renderUI({
-  help_modal_km('Studies','StudiesHelp',inclMD(file.path(r_path,"base/tools/help/Studies.md")))
+  help_modal_km('Workflow Overview','StudiesHelp',inclMD(file.path(r_path,"base/tools/help/Studies.md")))
 })
 
 output$ui_clipboard_load_Clinical <- renderUI({
@@ -38,13 +38,14 @@ output$ui_ClinicalData <- renderUI({
     ),
 
     wellPanel(
-      radioButtons(inputId = "ClinicalDataID", label = "Load Clinical Data to Datasets:",
+      radioButtons(inputId = "ClinicalDataID", label = "Export for Processing:",
                    c("Load ClinicalData"="ClinicalData","clipboard" = "clipboard_Clin"),
                    selected = "ClinicalData", inline = TRUE),
 
 
       conditionalPanel(condition = "input.ClinicalDataID == 'ClinicalData'",
-                       actionButton('loadClinicalData', 'Load Clinical Data', style="float:center")
+                       actionButton('loadClinicalData', 'Export to Datasets',
+                                    icon('arrow-up'), style="float:center")
 
       ),
       conditionalPanel(condition = "input.ClinicalDataID == 'clipboard_Clin'",
@@ -63,7 +64,7 @@ observe({
   isolate({
     loadClipboardData()
     updateRadioButtons(session = session, inputId = "ClinicalDataID",
-                       label = "Load Clincial Data to Datasets:",
+                       label = "Export Clincial Data to Datasets:",
                        c("Load ClinicalData" = "ClinicalData","clipboard" = "clipboard_Clin"),
                        selected = "ClinicalData", inline = TRUE)
 

@@ -16,7 +16,7 @@
 #   ## reset r_state on dataset change ... when you are not on the
 #   ## Manage > Data tab
 #   if (is.null(r_state$dataset) || is.null(input$dataset)) return()
-#   if (input$tabs_data != "Handle")  {
+#   if (input$tabs_data != "Processing")  {
 #     shinyUI(
 #       do.call(navbarPage, c("bioCancer", nav_ui, shared_ui, help_menu))
 #     )
@@ -134,14 +134,14 @@ saveStateOnRefresh <- function(session = session) {
 ## used for group_by and facet row/column
 # groupable_vars <- reactive({
 #   .getdata() %>%
-#     summarise_each(funs(is.factor(.) || lubridate::is.Date(.) || (n_distinct(., na_rm = TRUE)/n()) < .25)) %>%
+#     dplyr::summarise_each(funs(is.factor(.) || lubridate::is.Date(.) || (n_distinct(., na_rm = TRUE)/n()) < .25)) %>%
 #     {which(. == TRUE)} %>%
 #     varnames()[.]
 # })
 
 groupable_vars <- reactive({
   .getdata() %>%
-    summarise_each(funs(is.factor(.) || is.logical(.) || lubridate::is.Date(.) || is.integer(.) ||
+    dplyr::summarise_each(funs(is.factor(.) || is.logical(.) || lubridate::is.Date(.) || is.integer(.) ||
                         ((n_distinct(., na_rm = TRUE)/n()) < .30))) %>%
                         # ((n_distinct(., na_rm = TRUE)/n()) < .30 && !is.numeric(.)))) %>%
     {which(. == TRUE)} %>%
@@ -150,7 +150,7 @@ groupable_vars <- reactive({
 
 groupable_vars_nonum <- reactive({
   .getdata() %>%
-    summarise_each(funs(is.factor(.) || is.logical(.) || lubridate::is.Date(.) || is.integer(.) ||
+    dplyr::summarise_each(funs(is.factor(.) || is.logical(.) || lubridate::is.Date(.) || is.integer(.) ||
                    is.character(.))) %>%
                         # ((n_distinct(., na_rm = TRUE)/n()) < .30 && !is.numeric(.)))) %>%
     {which(. == TRUE)} %>%
@@ -161,7 +161,7 @@ groupable_vars_nonum <- reactive({
 ## used in compare proportions
 two_level_vars <- reactive({
   .getdata() %>%
-    summarise_each(funs(n_distinct(., na_rm = TRUE))) %>%
+    dplyr::summarise_each(funs(n_distinct(., na_rm = TRUE))) %>%
     { . == 2 } %>%
     which(.) %>%
     varnames()[.]
@@ -170,7 +170,7 @@ two_level_vars <- reactive({
 ## used in visualize - don't plot Y-variables that don't vary
 varying_vars <- reactive({
   .getdata() %>%
-    summarise_each(funs(does_vary(.))) %>%
+    dplyr::summarise_each(funs(does_vary(.))) %>%
     as.logical %>%
     which %>%
     varnames()[.]
@@ -264,7 +264,7 @@ show_data_snippet <- function(dat = input$dataset, nshow = 7, title = "") {
     enc2utf8
 }
 
-suggest_data <- function(text = "", dat = "diamonds")
+suggest_data <- function(text = "", dat = "epiGenomics")
   paste0(text, "For an example dataset go to Data > Manage, select 'examples' from the\n
          'Load data of type' dropdown, and press the 'Load examples' button. Then\nselect the \'", dat, "\' dataset.")
 
@@ -461,6 +461,30 @@ help_and_report <- function(modal_title, fun_name, help_file) {
   enc2utf8 %>% HTML %>% withMathJax
 }
 
+
+help_and_report_km <- function(modal_title, fun_name, help_file) {
+  sprintf("<div class='modal fade' id='%s_help' tabindex='-1' role='dialog' aria-labelledby='%s_help_label' aria-hidden='true'>
+          <div class='modal-dialog'>
+          <div class='modal-content'>
+          <div class='modal-header'>
+          <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+          <h4 class='modal-title' id='%s_help_label'>%s</h4>
+          </div>
+          <div class='modal-body'>%s<br>
+
+          &copy; K. Mezhoud (2016) <a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/' target='_blank'><img alt='Creative Commons License' style='border-width:0' src ='imgs/80x15.png' /></a>
+
+          </div>
+          </div>
+          </div>
+          </div>
+          <i title='Help' class='fa fa-question alignleft' data-toggle='modal' data-target='#%s_help'></i>
+          <i title='Report results' class='fa fa-edit action-button shiny-bound-input alignright' href='#%s_report' id='%s_report'></i>
+          <div style='clear: both;'></div>",
+          fun_name, fun_name, fun_name, modal_title, help_file, fun_name, fun_name, fun_name) %>%
+    enc2utf8 %>% HTML %>% withMathJax
+}
+
 ## function to render .md files to html
 inclMD <- function(path) {
   markdown::markdownToHTML(path, fragment.only = TRUE, options = "",
@@ -532,4 +556,96 @@ use_input <- function(var, vars, init = character(0), fun = "state_single") {
     if (length(ivar) > 0 && ivar %in% c("None","none",".","")) r_state[[var]] <<- ivar
     get(fun)(var, vars, init)
   }
+}
+
+## use the value in the input list if available and update r_state
+state_init <- function(var, init = "") {
+  isolate({
+    ivar <- input[[var]]
+    if (var %in% names(input) || length(ivar) > 0) {
+      ivar <- input[[var]]
+      if (is_empty(ivar)) r_state[[var]] <<- NULL
+    } else {
+      ivar <- .state_init(var, init)
+    }
+    ivar
+  })
+}
+
+## need a separate function for checkboxGroupInputs
+state_group <- function(var, init = "") {
+  isolate({
+    ivar <- input[[var]]
+    if (var %in% names(input) || length(ivar) > 0) {
+      ivar <- input[[var]]
+      if (is_empty(ivar)) r_state[[var]] <<- NULL
+    } else {
+      ivar <- .state_init(var, init)
+      r_state[[var]] <<- NULL ## line that differs for CBG inputs
+    }
+    ivar
+  })
+}
+
+.state_init <- function(var, init = "") {
+  rs <- r_state[[var]]
+  if (is_empty(rs)) init else rs
+}
+
+state_single <- function(var, vals, init = character(0)) {
+  isolate({
+    ivar <- input[[var]]
+    if (var %in% names(input) && is.null(ivar)) {
+      r_state[[var]] <<- NULL
+      ivar
+    } else if (available(ivar) && all(ivar %in% vals)) {
+      if (length(ivar) > 0) r_state[[var]] <<- ivar
+      ivar
+    } else if (available(ivar) && any(ivar %in% vals)) {
+      ivar[ivar %in% vals]
+    } else {
+      if (length(ivar) > 0 && all(ivar %in% c("None","none",".","")))
+        r_state[[var]] <<- ivar
+      .state_single(var, vals, init = init)
+    }
+    # .state_single(var, vals, init = init)
+  })
+}
+
+.state_single <- function(var, vals, init = character(0)) {
+  rs <- r_state[[var]]
+  if (is_empty(rs)) init else vals[vals == rs]
+}
+
+state_multiple <- function(var, vals, init = character(0)) {
+  isolate({
+    ivar <- input[[var]]
+    if (var %in% names(input) && is.null(ivar)) {
+      r_state[[var]] <<- NULL
+      ivar
+    } else if (available(ivar) && all(ivar %in% vals)) {
+      if (length(ivar) > 0) r_state[[var]] <<- ivar
+      ivar
+    } else if (available(ivar) && any(ivar %in% vals)) {
+      ivar[ivar %in% vals]
+    } else {
+      if (length(ivar) > 0 && all(ivar %in% c("None","none",".","")))
+        r_state[[var]] <<- ivar
+      .state_multiple(var, vals, init = init)
+    }
+  })
+}
+
+.state_multiple <- function(var, vals, init = character(0)) {
+  rs <- r_state[[var]]
+  ## "a" %in% character(0) --> FALSE, letters[FALSE] --> character(0)
+  if (is_empty(rs)) vals[vals %in% init] else vals[vals %in% rs]
+}
+
+## cat to file
+## use with tail -f ~/r_cat.txt in a terminal
+cf <- function(...) {
+  cat(paste0("\n--- called from: ", environmentName(parent.frame()), " (", lubridate::now(), ")\n"), file = "~/r_cat.txt", append = TRUE)
+  out <- paste0(capture.output(...), collapse = "\n")
+  cat("--\n", out, "\n--", sep = "\n", file = "~/r_cat.txt", append = TRUE)
 }

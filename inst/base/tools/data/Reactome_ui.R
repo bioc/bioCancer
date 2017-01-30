@@ -36,7 +36,7 @@ output$ui_NodeAttri_ReactomeFI <- renderUI({
 })
 
 output$ui_AnnoGeneSet_ReactomeFI <- renderUI({
-  type <- c("None","Pathway", "BP","CC","MF")
+  type <- list('None','Pathway', 'Biological Process'=list('BP'),'Cellular Component'= list('CC'), 'Molecular Function' = list('MF'))
   selectizeInput("TypeGeneSetID", label="Type of enrichment:", choices=type,
                  selected ="None", multiple=FALSE
   )
@@ -44,7 +44,7 @@ output$ui_AnnoGeneSet_ReactomeFI <- renderUI({
 
 output$ui_GeneSetFDR <- renderUI({
   #if(is.null(r_data$MinGeneSetFDR)){
-  sliderInput("GeneSetFDRID", "FDR of enrichment", 0.025, min =0.0005,
+  sliderInput("GeneSetFDRID", "FDR of enrichment", 0.0005, min =0.0005,
               max=0.05, step=0.0005 )
   #}else{
   #sliderInput("GeneSetFDRID", "FDR", 0.005, min =r_data$MinGeneSetFDR,
@@ -86,13 +86,14 @@ output$ui_MetSliderHM27 <- renderUI({
 
 
 output$ui_Reactome <- renderUI({
-  updateSelectizeInput(session, 'StudiesIDReactome', choices = Studies[,1], selected = c("brca_tcga","gbm_tcga","lihc_tcga","lusc_tcga"))
+  updateSelectizeInput(session, 'StudiesIDReactome', choices = Studies[,1],
+                       selected = c("brca_tcga","gbm_tcga","lihc_tcga","lusc_tcga"))
 
   tagList(
     conditionalPanel(condition = "input.ReacRunId==true",
                      actionButton("ReacGeneListId", "load Reactome Genes")
     ),
-    h4("Edges Attributes:"),
+    h4("Edges Attributes:", style= "color:blue"),
     wellPanel(
       uiOutput("ui_FIsFilter"),
       uiOutput("ui_UseLinker"),
@@ -101,16 +102,19 @@ output$ui_Reactome <- renderUI({
     ),
     ## Attributes Nodes from geNetClassifier (Only if Class is pressed)
     # conditionalPanel(condition = "input.ClassID == 'Samples'",
-    h4("Node Attributes:"),
+      h4("Nodes Attributes:", style= "color:blue"),
+
+
     wellPanel(
+      wellPanel(
       uiOutput("ui_NodeAttri_ReactomeFI"),
 
       conditionalPanel("input.NodeAttri_ReactomeID =='GeneSet' ||
                        input.NodeAttri_ReactomeID =='FreqInt./GeneSet'",
                        uiOutput("ui_AnnoGeneSet_ReactomeFI"),
                        uiOutput("ui_GeneSetFDR")
-      ),
-
+      )
+),
 
       #conditionalPanel(condition = "input.ClassID=='Classifier'",
       uiOutput("ui_NodeAttri_Classifier"),
@@ -123,24 +127,24 @@ output$ui_Reactome <- renderUI({
             div(class="col-xs-6",
                 checkboxInput("ViewProfDataReactomeID", "Availability", value = FALSE)),
             div(class="col-xs-6",
-                checkboxInput("getlistProfDataID", "Load", value = FALSE))
+                checkboxInput("getlistProfDataIDReactome", "Load", value = FALSE))
         ),
 
 
-        #           radioButtons(inputId = "getlistProfDataID", label = "Profile Data",
+        #           radioButtons(inputId = "getlistProfDataIDReactome", label = "Profile Data",
         #                        c("Availability"="Availability" ,"Load"="Load"),
         #                        selected = "", inline = TRUE),
 
 
 
-        conditionalPanel(condition= "input.getlistProfDataID==true",
+        conditionalPanel(condition= "input.getlistProfDataIDReactome==true",
                          uiOutput("ui_NodeAttri_ProfData")
         ),
 
 
         #),
         #                 )
-        conditionalPanel(condition ="input.getlistProfDataID==true",
+        conditionalPanel(condition ="input.getlistProfDataIDReactome==true",
                          uiOutput("ui_Freq_MutSlider"),
                          uiOutput("ui_MetSliderHM450"),
                          uiOutput("ui_MetSliderHM27")
@@ -165,7 +169,7 @@ output$ui_Reactome <- renderUI({
       #),
       div(class="row",
           div(class="col-xs-4",
-              checkboxInput("ReacRunId", "Plot" ,value = FALSE)),
+              checkboxInput("ReacRunId", label = p("Plot", style="color:blue"), value = FALSE)),
           div(class="col-xs-4",
               checkboxInput("ReacLegendId", "Legend", value=FALSE)
           )
@@ -174,19 +178,19 @@ output$ui_Reactome <- renderUI({
     ),
 
     tagList(
-      h4("Dynamic Network:"),
+      h4("Dynamic Network:", style="color:blue"),
       wellPanel(
         uiOutput("ui_visPhysic"),
         div(class="row",
             div(class="col-xs-4",
-                checkboxInput("NetworkRunId", "Plot" ,value = FALSE)),
+                checkboxInput("NetworkRunId", label = p("Plot", style= "color:blue"),value = FALSE)),
             div(class="col-xs-4"
                 #checkboxInput("ReacLegendId", "Legend", value=FALSE)
             )
         )
       )
     ),
-    help_modal_km('Reactome','ReactomeHelp',inclMD(file.path(r_path,"base/tools/help/Reactome.md")))
+    help_modal_km('Networking','ReactomeHelp',inclMD(file.path(r_path,"base/tools/help/Reactome.md")))
 
     # with(tags, table(
     #   tr(
@@ -204,7 +208,7 @@ output$ui_Reactome <- renderUI({
 output$ReactomeAvailability <- DT::renderDataTable({
   withProgress(message = 'Loading Data...', value = 0.1, {
     Sys.sleep(0.25)
-    dat <- checkDimensions(panel = "Reactome", StudyID= input$StudiesIDReactome)
+    dat <- checkDimensions(panel = "Networking", StudyID= input$StudiesIDReactome)
     ## remove rownames to column
     dat <- dat %>% tibble::rownames_to_column("Samples")
     # action = DT::dataTableAjax(session, dat, rownames = FALSE, toJSONfun = my_dataTablesJSON)
@@ -216,19 +220,21 @@ output$ReactomeAvailability <- DT::renderDataTable({
 
 ## print Structure of Profiles data
 
-output$StrListProfData <- renderPrint({
-  #   if(is.null(input$getlistProfDataID)){
-  #     return()
-  #   }else{
+output$StrListProfDataReactome <- renderPrint({
   withProgress(message = 'loading Profiles Data... ', value = 0.1, {
     Sys.sleep(0.25)
-    getListProfData(panel='Reactome', input$GeneListID)
+    getListProfData(panel='Networking', input$GeneListID)
   })
+  if(is.null(r_data$ListProfData)){
+    c("Gene List is empty. copy and paste genes from text file (Gene/line)
+      or use gene list from examples.")
+  }else{
   cat("STUDIES:\n", names(r_data$ListMutData), "\n")
   cat("PROFILES DATA:\n",names(r_data$ListProfData) ,"and Mutation", sep = " " )
   #str(r_data$ListProfData)
   #str(r_data$ListMutData)
-  #}
+  }
+
 })
 
 

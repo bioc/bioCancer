@@ -11,11 +11,10 @@
 #'
 #' @name bioCancer
 #' @docType package
-#' @importFrom dplyr combine collect combine collapse collect full_join
+#' @importFrom dplyr add_rownames combine collect combine collapse collect full_join
 #' @importFrom dplyr inner_join left_join mutate n_distinct rename right_join
 #' @importFrom dplyr select select_ slice slice_ mutate_each
 #' @importFrom plyr ldply ddply adply arrange desc
-#' @importFrom tibble rownames_to_column
 #' @import ggplot2
 #' @import DiagrammeR
 #' @importFrom knitr knit2html

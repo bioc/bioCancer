@@ -175,6 +175,7 @@ output$Enrichment <- renderUI({
 
   tabsetPanel(id = "tabs_Enrichment",
               tabPanel("Circomics",
+                       tags$hr(),
                        #                        if('CNA' %in% input$CircosDimensionID ){
                        #                          plot_downloader("SaveMetabologram_CNA", pre = "")
                        #                        },
@@ -199,8 +200,22 @@ output$Enrichment <- renderUI({
                        #                          plot_downloader("SaveMetabologram_Mut", pre = "")
                        #                        },
                        if('Mutation' %in% input$CircosDimensionID ){
-                         # h3("Mutation Frequency: (Min,Max)")
+
+                         tagList(
+
+                           div(class="row",
+                               div(class="col-xs-6",
+                                   DT::dataTableOutput(outputId = "Sequenced_SampleSize")),
+                               div(class="col-xs-6",
+                                   DT::dataTableOutput(outputId = "FreqMutSummary"))
+                           ),
+
+
+                         h3(paste0("Mutation Percentage: (Min = ", min(r_data$Freq_DfMutData, na.rm = TRUE) ,
+                                   "%, Max = ", max(r_data$Freq_DfMutData, na.rm = TRUE)  ,"%)", sep=""),  align="center"),
+
                          coffeewheelOutput('getCoffeeWheel_Mut', width = 600, height = 600)
+                         )
                        },
                        #                        if('miRNA' %in% input$CircosDimensionID ){
                        #                          plot_downloader("SaveMetabologram_miRNA", pre = "")
@@ -396,7 +411,7 @@ output$Processing <- renderUI({
 
               # tabPanel("View", DT::dataTableOutput("dataviewer"), verbatimTextOutput("tbl_state")),
               tabPanel("Visualize",
-                       plot_downloader(".visualize", width = viz_plot_width(), height = viz_plot_height(), pre = ""),
+                       plot_downloader(".visualize", width = viz_plot_width, height = viz_plot_height, pre = ""),
                        plotOutput("visualize", width = "100%", height = "100%")),
               tabPanel("Pivot",
                        conditionalPanel("input.pvt_tab == true",
@@ -406,7 +421,7 @@ output$Processing <- renderUI({
                        conditionalPanel("input.pvt_chi2 == true", htmlOutput("pivotr_chi2")),
                        conditionalPanel("input.pvt_plot == true",
                                         HTML("<br><br>"),
-                                        plot_downloader("pivot", width = pvt_plot_width(), height = pvt_plot_height()),
+                                        plot_downloader("pivot", width = pvt_plot_width, height = pvt_plot_height),
                                         plotOutput("plot_pivot", width = "100%", height = "100%")
                        )
               ),

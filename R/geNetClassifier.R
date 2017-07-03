@@ -47,7 +47,8 @@ getList_GenProfs <- function(checked_Studies){
 
 
 #' get genes classification
-#' @usage getGenesClassification(checked_Studies, GeneList, samplesize, threshold, listGenProfs, listCases)
+#' @usage getGenesClassification(checked_Studies, GeneList,
+#'  samplesize, threshold, listGenProfs, listCases)
 #' @param checked_Studies checked studies
 #' @param GeneList gene list
 #' @param samplesize sample size
@@ -68,7 +69,8 @@ getList_GenProfs <- function(checked_Studies){
 #' GeneList <- c('P53', 'IFI16', 'BRCA1')
 #' samplesize <- 50
 #' threshold <- 0.95
-#' table <- getGenesClassification(checked_Studies, GeneList ,samplesize  ,threshold  ,listGenProfs, listCases)
+#' table <- getGenesClassification(checked_Studies, GeneList,
+#' samplesize  ,threshold  ,listGenProfs, listCases)
 #'}
 #'
 getGenesClassification <- function(checked_Studies,
@@ -79,7 +81,8 @@ getGenesClassification <- function(checked_Studies,
                                    listCases){
   if(length(listCases) < length(checked_Studies)){
     GenesClassDetails_df <-
-      as.data.frame("Some selected study does not have mRNA data. Select only study witn mRNA data.")
+      as.data.frame("Some selected study does not have mRNA data.
+                    Select only study witn mRNA data.")
     return(GenesClassDetails_df)
 
   }else{

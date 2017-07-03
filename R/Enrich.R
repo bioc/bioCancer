@@ -1,5 +1,5 @@
 #' Attribute Color to Value
-#' @usage attriColorValue(Value, df, colors=c(a,b,c, d,e),feet)
+#' @usage attriColorValue(Value, df, colors=c(a,b,c),feet)
 #' @param Value integer
 #' @param df data frame with numeric values
 #' @param colors a vector of 5 colors
@@ -17,11 +17,11 @@
 #' rownames(ProfData) <- NULL
 #' clrRef <- attriColorValue(1.2,
 #' ProfData,
-#'  colors = c("blue", "white","yellow","red", "black"),
+#'  colors = c("blue3", "white","red"),
 #'   feet=10)
 #'}
 #'
-attriColorValue <- function(Value, df, colors=c(a,b,c, d,e),feet){
+attriColorValue <- function(Value, df, colors=c(a,b,c),feet){
   #df <- df *100
   df[is.na(df)] <- 0
   if(max(df,na.rm=TRUE)<1){
@@ -86,7 +86,7 @@ attriColorGene <- function(df){
   }else{
     colorls <- lapply(dfMeansOrCNA, function(x)
       attriColorValue(x, dfMeansOrCNA,
-                      colors=c("blue3","cyan3","white","yellow","red"),
+                      colors=c("blue3","white","red"),
                       feet=0.1))
   }
   return(colorls)
@@ -200,8 +200,10 @@ reStrDimension <- function(LIST){
 #'   }
 #' @export
 UnifyRowNames <- function(x, geneList){
-  #df_MutData <-as.data.frame(table(x$gene_symbol) /sum(table(x$gene_symbol))*100)
-  df_MutData <-as.data.frame(table(x$gene_symbol))
+  ## compute the ratio of mutation
+  df_MutData <-as.data.frame(table(x$gene_symbol) /sum(table(x$gene_symbol))*100)
+  ## compute le sum of mutation using table function.
+  #df_MutData <-as.data.frame(table(x$gene_symbol))
   rownames(df_MutData) <- df_MutData$Var1
   ## ordering genes in MutData as in GeneList
 
@@ -285,6 +287,7 @@ getFreqMutData <- function(list, geneListLabel){
 
 
   r_data[['Freq_DfMutData']] <- Freq_DfMutData
+  #Freq_DfMutData <<- Freq_DfMutData
   return(Freq_DfMutData)
 }
 
@@ -446,3 +449,38 @@ checkDimensions<- function(panel, StudyID){
   names(df)<- checked_Studies
   return(df)
 }
+
+
+
+#' get samples size of sequensed genes
+#' @usage getSequensed_SampleSize(StudyID)
+#' @param StudyID Study reference using cgdsr index
+#'
+#'
+#' @return dataframe with sample size for each selected study.
+#'
+#' @examples
+#' \dontrun{
+#'  sampleSize <- getSequensed_SampleSize(input$StudiesIDCircos)
+#' }
+#'
+#' @export
+getSequensed_SampleSize <- function(StudyID){
+
+  checked_Studies <- StudyID #input$StudiesIDCircos
+  # get Cases for selected Studies
+ dat <-
+    unname(
+    as.data.frame(apply(as.data.frame(paste(checked_Studies, "_sequenced", sep="")), 1,
+                                              function(x) nrow(cgdsr::getClinicalData(cgds,x))))
+    )
+
+  rownames(dat) <-  StudyID
+  colnames(dat) <- "Samples"
+  ## remove rownames to column
+  dat <- dat %>% tibble::rownames_to_column("Studies")
+
+ return(dat)
+}
+
+

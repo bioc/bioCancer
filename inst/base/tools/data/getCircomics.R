@@ -86,7 +86,7 @@ observe({
 
 ## get Wheel for Profiles Data
 output$getCoffeeWheel_All <- renderCoffeewheel({
-  shiny::withProgress(message = 'Creating Wheel. Waiting...', value = 0.1, {
+  shiny::withProgress(message = 'Creating Wheel. Waiting for all Dimensions...', value = 0.1, {
     Sys.sleep(0.25)
 
     #getListProfData(panel="Circomics")
@@ -100,10 +100,9 @@ output$getCoffeeWheel_All <- renderCoffeewheel({
 
 ## get Wheel for Methylation
 output$getCoffeeWheel_Met <- renderCoffeewheel({
-  shiny::withProgress(message = 'Creating Wheel. Waiting...', value = 0.1, {
+  shiny::withProgress(message = 'Creating Wheel. Waiting for Methylation...', value = 0.1, {
     Sys.sleep(0.25)
 
-    #getListProfData()
     CoffeewheelTreeMetData <- reStrDimension(r_data$ListMetData)
     title<- paste("Methylations: HM450 and HM27")
     coffeewheel(CoffeewheelTreeMetData, width=600, height=600, main=title)
@@ -113,12 +112,11 @@ output$getCoffeeWheel_Met <- renderCoffeewheel({
 
 ## get Wheel for CNA
 output$getCoffeeWheel_CNA <- renderCoffeewheel({
-  shiny::withProgress(message = 'Creating Wheel. Waiting...', value = 0.1, {
+  shiny::withProgress(message = 'Creating Wheel. Waiting for CNA...', value = 0.1, {
     Sys.sleep(0.25)
 
-    #getListProfData()
     CoffeewheelTreeCNAData <- reStrDisease(r_data$ListProfData$CNA)
-    title<- paste("Copy Number Alteration [-2, +2]")
+    title<- paste("The most frequent Copy Number Alteration [-2, +2]")
     coffeewheel(CoffeewheelTreeCNAData, width=600, height=600,main=title)
   })
 
@@ -126,10 +124,10 @@ output$getCoffeeWheel_CNA <- renderCoffeewheel({
 
 ## get Wheel for mRNA
 output$getCoffeeWheel_mRNA <- renderCoffeewheel({
-  shiny::withProgress(message = 'Creating Wheel. Waiting...', value = 0.1, {
+  shiny::withProgress(message = 'Creating Wheel. Waiting for mRNA...', value = 0.1, {
     Sys.sleep(0.25)
+    #ListProfData_bkp <<- r_data$ListProfData$Expression
 
-    #getListProfData()
     CoffeewheelTreeMetData <- reStrDisease(r_data$ListProfData$Expression)
     title<- paste("mRNA expression")
     coffeewheel(CoffeewheelTreeMetData, width=600, height=600, main=title)
@@ -139,7 +137,7 @@ output$getCoffeeWheel_mRNA <- renderCoffeewheel({
 
 ## get Wheel for miRNA
 output$getCoffeeWheel_miRNA <- renderCoffeewheel({
-  shiny::withProgress(message = 'Creating Wheel. Waiting...', value = 0.1, {
+  shiny::withProgress(message = 'Creating Wheel. Waiting for miRNA...', value = 0.1, {
     Sys.sleep(0.25)
 
     #getListProfData()
@@ -152,7 +150,7 @@ output$getCoffeeWheel_miRNA <- renderCoffeewheel({
 
 ## get Wheel for RPPA
 output$getCoffeeWheel_RPPA <- renderCoffeewheel({
-  shiny::withProgress(message = 'Creating Wheel. Waiting...', value = 0.1, {
+  shiny::withProgress(message = 'Creating Wheel. Waiting for RPPA...', value = 0.1, {
     Sys.sleep(0.25)
 
     #getListProfData()
@@ -165,7 +163,7 @@ output$getCoffeeWheel_RPPA <- renderCoffeewheel({
 
 ## get Wheel for Mutation
 output$getCoffeeWheel_Mut <- renderCoffeewheel({
-  shiny::withProgress(message = 'Creating Wheel. Waiting...', value = 0.1, {
+  shiny::withProgress(message = 'Creating Wheel. Waiting for Mutation...', value = 0.1, {
     Sys.sleep(0.25)
 
     ## get Gene Mutation Frequency
@@ -321,7 +319,7 @@ output$Sequenced_SampleSize <- DT::renderDataTable({
   shiny::withProgress(message = 'Computing Sample sizes...', value = 0.1, {
     Sys.sleep(0.25)
 
-  dat <<- getSequensed_SampleSize(StudyID = input$StudiesIDCircos)
+  dat <- getSequensed_SampleSize(StudyID = input$StudiesIDCircos)
 
   DT::datatable(dat,
                 caption= "Table 1: Sample Sizes by study",
@@ -331,10 +329,47 @@ output$Sequenced_SampleSize <- DT::renderDataTable({
 })
 
 output$FreqMutSummary <- DT::renderDataTable({
-  dat <- r_data$Freq_DfMutData %>% tibble::rownames_to_column("Genes")
-
-  DT::datatable(dat,
+  # dat <- r_data$Freq_DfMutData %>% tibble::rownames_to_column("Genes")
+  # rnames <- rownames(r_data$Freq_DfMutData)
+  # rownames(r_data$Freq_DfMutData) <- NULL
+  # FreqIn <- as.data.frame(r_data$Freq_DfMutData)
+  # dat <- cbind("Genes"= rnames, r_data$Freq_DfMutData)
+  DT::datatable(r_data$Freq_DfMutData,
             caption="Table 2: Percentage (%) of mutation by gene in each study",
             autoHideNavigation = getOption("DT.autoHideNavigation")
             )
+})
+
+output$mRNA_mean <- DT::renderDataTable({
+  dat <- lapply(r_data$ListProfData$Expression, function(x) colMeans(x))
+  dat <- as.data.frame(dat)
+  dat <- round(dat, digits = 0)
+  DT::datatable(dat,
+                caption="Table 2: Means of mRNA expression",
+                autoHideNavigation = getOption("DT.autoHideNavigation")
+  )
+})
+output$CNA_Max <- DT::renderDataTable({
+  ls <- lapply(r_data$ListProfData$CNA,function(x) apply(x,2, function(y) as.data.frame(table(y[order(y)]))))
+  WhichMax <- lapply(ls, function(x) as.data.frame(lapply(x, function(y) y[,1][which(y[,2]== max(y[,2]))])))
+  genes_names <- lapply(WhichMax, function(x) names(x))[1]
+  names(genes_names) <- 'Genes'
+  WhichMax <- lapply(WhichMax, function(x) as.numeric(as.matrix(x)))
+  WhichMax <- as.data.frame(WhichMax)
+  dat <- cbind(Genes= genes_names , WhichMax )
+  DT::datatable(dat,
+                caption="Table 2: The most frequent CNA prolife",
+                autoHideNavigation = getOption("DT.autoHideNavigation")
+  )
+})
+
+output$Methylation_mean <- DT::renderDataTable({
+  #dat <- list(r_data$ListMetData,r_data$ListProfData$Met_HM450)
+  dat <- lapply(r_data$ListMetData, function(x) lapply(x, function(y) colMeans(y)))
+  dat <- as.data.frame(dat)
+  dat <- round(dat, digits = 3)
+  DT::datatable(dat,
+                caption="Table 2: Correlation of silencing gene by Methylation: (0:1)",
+                autoHideNavigation = getOption("DT.autoHideNavigation")
+  )
 })

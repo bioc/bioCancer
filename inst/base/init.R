@@ -106,8 +106,8 @@ most_recent_session_file <- function() {
 
   if (length(fl) > 0) {
     data.frame(fn = fl, dt = file.mtime(fl)) %>% plyr::arrange(plyr::desc(dt)) %>%
-    dplyr::slice(1) %>% .[["fn"]] %>% as.character %>% basename %>%
-    gsub("r_(.*).rds","\\1",.)
+      dplyr::slice(1) %>% .[["fn"]] %>% as.character %>% basename %>%
+      gsub("r_(.*).rds","\\1",.)
   } else {
     NULL
   }
@@ -219,19 +219,19 @@ if (r_local) {
   # else
   #   r_env <- environment()
 
-    # r_env <- environment()
+  # r_env <- environment()
 
   ## adding any data.frame from the global environment to r_data should not affect
   ## memory usage ... at least until the entry in r_data is changed
   df_list <- sapply(mget(ls(envir = .GlobalEnv), envir = .GlobalEnv), is.data.frame) %>%
-    { names(.[.]) }
+  { names(.[.]) }
 
 
   for (df in df_list) {
     isolate({
       r_data[[df]] <- get(df, envir = .GlobalEnv)
       r_data[[paste0(df,"_descr")]] <- attr(r_data[[df]],'description') %>%
-        { if (is.null(.)) "No description provided. Please use bioCancer to add an overview of the data in markdown format.\n Check the 'Add/edit data description' box on the left of your screen" else . }
+      { if (is.null(.)) "No description provided. Please use bioCancer to add an overview of the data in markdown format.\n Check the 'Add/edit data description' box on the left of your screen" else . }
       r_data$datasetlist %<>% c(df, .) %>% unique
     })
   }
@@ -273,7 +273,7 @@ url_list <-
                                                                 "Plot"    = "base/compare-props/plot/")),
 
        "Cross-tabs" = list("tabs_cross_tabs" = list("Summary" = "base/cross-tabs/",
-                                                     "Plot"    = "base/cross-tabs/plot/")),
+                                                    "Plot"    = "base/cross-tabs/plot/")),
 
        "Correlation" = list("tabs_correlation" = list("Summary" = "regression/correlation/",
                                                       "Plot"    = "regression/correlation/plot/")),
@@ -320,9 +320,9 @@ for (i in names(url_list)) {
 ## environment to results from code run through knitr
 # r_knitr <- new.env(parent = emptyenv())
 # if (is.null(isolate(r_data$r_knitr))) {
-  # isolate({
-    # r_data$r_knitr <- if (exists("r_env")) new.env(parent = r_env) else new.env()
-  # })
+# isolate({
+# r_data$r_knitr <- if (exists("r_env")) new.env(parent = r_env) else new.env()
+# })
 # }
 
 
@@ -392,24 +392,11 @@ if (!is.null(r_state$nav_radiant)) {
 }
 
 ## 'sourcing' radiant's package functions in the server.R environment
-if (!"package:bioCancer" %in% search()) {
-  ## for shiny-server
-  if (r_path == "..") {
-    for (file in list.files("../../R",
-        pattern="\\.(r|R)$",
-        full.names = TRUE)) {
-
-      source(file, encoding = r_encoding, local = TRUE)
-    }
-  } else {
-    ## for shinyapps.io
-    copy_all(bioCancer)
-    set_class <- set_class         ## needed but not clear why
-    environment(set_class) <- environment() ## needed but not clear why
-  }
+if (!"package:bioCancer" %in% search() && getOption("radiant.path.bioCancer") == "..") {
+  ## for shiny-server and development
+  for (file in list.files("../../R", pattern="\\.(r|R)$", full.names = TRUE))
+    source(file, encoding = getOption("radiant.encoding"), local = TRUE)
 } else {
   ## for use with launcher
-  copy_all(bioCancer)
-  set_class <- set_class         ## needed but not clear why
-  environment(set_class) <- environment() ## needed but not clear why
+  radiant.data::copy_all(bioCancer)
 }

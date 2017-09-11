@@ -1,6 +1,15 @@
-# library(shiny)
-# library(magrittr)
+## Must be in global.R before sourcing from bioCancer
+options(radiant.path.data = system.file(package = "radiant.data"))
+source(file.path(getOption("radiant.path.data"), "app/global.R"),
+       encoding = getOption("radiant.encoding", default = "UTF-8"), local = TRUE)
 
+## Setting bioCnacer package path
+options(radiant.path.bioCancer = system.file(package = "bioCancer"))
+
+## set example data
+options(radiant.example.data = "bioCancer")
+
+                                                          ############################
 ## turn off warnings globally
 # options(warn=-1)
 
@@ -98,7 +107,7 @@ file.path(normalizePath("~"),"r_sessions") %>% {if (!file.exists(.)) dir.create(
 addResourcePath("figures", file.path(r_path,"base/tools/help/figures"))
 addResourcePath("imgs", file.path(r_path,"base/www/imgs/"))
 addResourcePath("js", file.path(r_path,"base/www/js/"))
-addResourcePath("rmarkdown", file.path(r_path,"base/www/rmarkdown/"))
+#addResourcePath("rmarkdown", file.path(r_path,"base/www/rmarkdown/"))
 
 
 #,theme= shinythemes::shinytheme("cerulean")
@@ -153,3 +162,15 @@ js_head <-
   )
 
 
+
+
+## running local or on a server
+if (Sys.getenv('SHINY_PORT') == "") {
+  options(r_local = TRUE)
+  ## no limit to filesize locally
+  options(shiny.maxRequestSize = -1)
+} else {
+  options(r_local = FALSE)
+  ## limit upload filesize on server (10MB)
+  options(shiny.maxRequestSize = 10 * 1024^2)
+}

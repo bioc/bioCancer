@@ -1,6 +1,29 @@
 ## SERVER FOR bioCancer PACKAGE
 shinyServer(function(input, output, session) {
 
+  ##  trace error
+   #options(warn=2, shiny.error= recover)
+
+
+  ############################################
+  #    SOURCING FROM  radiant.data PACKAGE   #
+  ############################################
+
+  ## source shared functions
+ # source(file.path(getOption("radiant.path.data"),"app/init.R"),
+  #       encoding = getOption("radiant.encoding"), local = TRUE)
+
+  #source(file.path(getOption("radiant.path.data"),"app/radiant.R"),
+   #      encoding = getOption("radiant.encoding"), local = TRUE)
+  #source("help.R", encoding = getOption("radiant.encoding"), local = TRUE)
+
+  ## source data & app tools from radiant.data
+  for (file in list.files(c(file.path(getOption("radiant.path.data"),"app/tools/data"),
+                            file.path(getOption("radiant.path.data"),"app/tools/data")
+  ),
+  pattern="\\.(r|R)$", full.names = TRUE))
+    source(file, encoding = getOption("radiant.encoding"), local = TRUE)
+
   # for cgdsr
 
   cgds <- cgdsr::CGDS("http://www.cbioportal.org/public-portal/")
@@ -9,20 +32,26 @@ shinyServer(function(input, output, session) {
 
   ## get Cases in side bar panel
   output$ui_Cases <- renderUI({
+    shiny::withProgress(message = 'loading Cases from cgdsr server...', value = 0.1, {
+      Sys.sleep(0.25)
     CaseLists <- cgdsr::getCaseLists(cgds,input$StudiesID)[,1]
     selectInput("CasesID", "Cases for selected study",
                 choices= CaseLists,
                 selected = CaseLists[2]
                 )
+    })
   })
 
   ## get Genetic Profiles in side bar panel
   output$ui_GenProfs <- renderUI({
+    shiny::withProgress(message = 'loading Genetics Profiles from cgdsr server...', value = 0.1, {
+      Sys.sleep(0.25)
     GeneticProfiles <- cgdsr::getGeneticProfiles(cgds,input$StudiesID)[,1]
     selectInput("GenProfID", "Genetic Profiles",
                 choices = GeneticProfiles,
                 selected = GeneticProfiles[3]
                 )
+    })
   })
 
 

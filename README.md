@@ -3,13 +3,13 @@
 [![Travis-CI Build Status](https://travis-ci.org/kmezhoud/bioCancer.svg?branch=master)](https://travis-ci.org/kmezhoud/bioCancer)
 [![releaseVersion](https://img.shields.io/badge/release%20version-3.2.11-green.svg?style=flat)](https://bioconductor.org/packages/bioCancer) [![develVersion](https://img.shields.io/badge/devel%20version-3.3.6-green.svg?style=flat)](https://github.com/bioCancer)
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/bioCancer.svg)](https://www.bioconductor.org/packages/devel/bioc/html/bioCancer.html#since)
-[![total](https://img.shields.io/badge/downloads-1422/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/bioCancer)
+[![total](https://img.shields.io/badge/downloads-1594/total-blue.svg?style=flat)](https://bioconductor.org/packages/stats/bioc/bioCancer)
 <!--[![Coverage Status](https://img.shields.io/coveralls/kmezhoud/bioCancer.svg)](https://coveralls.io/r/kmezhoud/bioCancer?branch=master) -->
 
 
 [bioCancer](
 http://kmezhoud.github.io/bioCancer/
-) is a browser-based interface for Cancer Genomics Data analysis and visualization developped by [R](http://www.r-project.org/), and based on the [Shiny](http://www.rstudio.com/shiny/) package. Example of bioCancer server is hosted at http://46.101.227.144:3838/bioCancer/
+) is a browser-based interface for Cancer Genomics Data analysis and visualization developped by [R](http://www.r-project.org/), and based on the [Shiny](http://www.rstudio.com/shiny/) package. Example of bioCancer server is hosted at http://46.101.227.???:3838/bioCancer/
 
 #### Interactivities
 
@@ -21,26 +21,26 @@ bioCancer focuses on Cancer Genomics data visualisation and Genes Classification
 
 ## Circomics: Pull User genetic profiles with existing Cancer studies
 
-<img src="./inst/extdata/imgs/Circomics_demo.gif">
+<img src="./inst/extdata/Circomics_demo.gif">
 <!--
 It is inspired from [radiant](https://github.com/vnijs/radiant) developed by <a href="http://rady.ucsd.edu/faculty/directory/nijs/" target="\_blank">Dr. Vincent Nijs</a>. 
 -->
 
 ## Preprocessing and Plotting
 
-<img src="./inst/extdata/imgs/S3Video2.gif">
+<img src="./inst/extdata/S3Video2.gif">
 
 
 ## Genes Classification and Biological terms Clustering
 
-<img src="./inst/extdata/imgs/S4Video3.gif">
+<img src="./inst/extdata/S4Video3.gif">
 
 
 ## Network modeling example
 <!--
 ![Network modeling](./inst/extradata/imgs/demoReactome.gif)
 -->
-<img src="./inst/extdata/imgs/S5Video4.gif">
+<img src="./inst/extdata/S5Video4.gif">
 
 <!--
 ## Key features

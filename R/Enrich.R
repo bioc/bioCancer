@@ -73,7 +73,7 @@ attriColorGene <- function(df){
     names(dfMeansOrCNA) <- namedfMeansOrCNA
 
   }else if(all(apply(df,2, function(x)class(x)=='numeric'))==TRUE){
-    ## Compute mean of FreqMutData and mRNA Expression, rppa
+    ## Compute mean of FreqMutData and mRNA Expression
     dfMeansOrCNA <-apply(df,2,function(x) mean(x, na.rm=TRUE))
     dfMeansOrCNA <- round(dfMeansOrCNA, digits = 0)
   }
@@ -87,7 +87,7 @@ attriColorGene <- function(df){
     colorls <- lapply(dfMeansOrCNA, function(x)
       attriColorValue(x, dfMeansOrCNA,
                       colors=c("blue3","white","red"),
-                      feet=0.01))
+                      feet=0.1))
   }
   return(colorls)
 }
@@ -243,7 +243,7 @@ getFreqMutData <- function(list, geneListLabel){
   if(is.null(list)){stop("Select a less one Study.")}
 
   Freq_ListMutData <- lapply(list,
-                              function(x) UnifyRowNames(x, GeneList))
+                             function(x) UnifyRowNames(x, GeneList))
 
   ## convert the list of correlation matrices to Array
   Freq_ArrayMutData <- array(unlist( Freq_ListMutData),
@@ -257,7 +257,7 @@ getFreqMutData <- function(list, geneListLabel){
                         names(Freq_ListMutData)),
                    silent=TRUE),"try-error")){
     p("There is a Study without Mutation Data.
-         Use Mutation Panel to verify mutations data for selected studies.",
+      Use Mutation Panel to verify mutations data for selected studies.",
       align="center", style = "color:blue")
   }else{
     dimnames(Freq_ArrayMutData) <-
@@ -265,7 +265,7 @@ getFreqMutData <- function(list, geneListLabel){
            colnames(Freq_ListMutData[[1]]),
            names(Freq_ListMutData))
   }
-#   ?getListProfData(Genes= empty)
+  #   ?getListProfData(Genes= empty)
   if(dim(Freq_ArrayMutData)[3]==1){
     Freq_DfMutData <- as.numeric(Freq_ArrayMutData[,2,])
     names(Freq_DfMutData) <- names(Freq_ArrayMutData[,2,])
@@ -469,10 +469,10 @@ getSequensed_SampleSize <- function(StudyID){
 
   checked_Studies <- StudyID #input$StudiesIDCircos
   # get Cases for selected Studies
- dat <-
+  dat <-
     unname(
-    as.data.frame(apply(as.data.frame(paste(checked_Studies, "_sequenced", sep="")), 1,
-                                              function(x) nrow(cgdsr::getClinicalData(cgds,x))))
+      as.data.frame(apply(as.data.frame(paste(checked_Studies, "_sequenced", sep="")), 1,
+                          function(x) nrow(cgdsr::getClinicalData(cgds,x))))
     )
 
   rownames(dat) <-  StudyID
@@ -480,7 +480,7 @@ getSequensed_SampleSize <- function(StudyID){
   ## remove rownames to column
   dat <- dat %>% tibble::rownames_to_column("Studies")
 
- return(dat)
+  return(dat)
 }
 
 

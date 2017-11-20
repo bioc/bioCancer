@@ -4,16 +4,16 @@
 \alias{widgetThumbnail}
 \title{Capture html output widget as .png in R}
 \usage{
-widgetThumbnail(p, thumbName, width = 600, height = 600)
+widgetThumbnail(p, thumbName, width = 1024, height = 1024)
 }
 \arguments{
 \item{p}{is the html widget}
 
 \item{thumbName}{is the name of the new png file}
 
-\item{width}{600}
+\item{width}{1024}
 
-\item{height}{600}
+\item{height}{1024}
 }
 \value{
 3 files .html, .js and .png

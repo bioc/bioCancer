@@ -52,8 +52,8 @@ displayTable <- function(df){
 #'}
 #' @export
 whichGeneList <- function(geneListLabel){
-  if(geneListLabel == "Genes"){
-    GeneList <- r_data$Genes
+  if(geneListLabel == "User_Genes"){
+    GeneList <- r_data$User_Genes
   }else if(geneListLabel == "Reactome_GeneList"){
     GeneList <- t(r_data$Reactome_GeneList)
   #}else if(r_path == "inst"){

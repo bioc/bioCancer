@@ -77,8 +77,9 @@ Although bioCancer's web-interface can Processing quite a few data and analysis 
 
 bioCancer courant release:
 ```r
- source("https://bioconductor.org/biocLite.R")
- biocLite("bioCancer")
+ if (!requireNamespace("BiocManager", quietly=TRUE))
+     install.packages("BiocManager")
+ BiocManager::install("bioCancer")
 ```
 
 bioCancer is under development:

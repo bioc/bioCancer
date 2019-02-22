@@ -117,7 +117,7 @@ output$dl_GenesClassDetails_tab <- shiny::downloadHandler(
   filename = function() { paste0("Classification_tab.csv") },
   content = function(file) {
     get_data(r_data$GenesClassDetails, vars = NULL,
-            rows = NULL, na.rm = FALSE) %>%
+             rows = NULL, na.rm = FALSE) %>%
       write.csv(file, row.names = FALSE)
   }
 )
@@ -318,7 +318,7 @@ observeEvent(input$ClassifierHelp_report, {
 
   cmd1 <- paste0("```{r fig.width=10.46, fig.height=5.54, dpi =72}\n",
                  paste0("get_data(r_data$GenesClassDetails, vars = NULL,
-            rows = NULL, na.rm = FALSE)"),
+                        rows = NULL, na.rm = FALSE)"),
                  "\n",
                  "\n```\n"
   )
@@ -331,7 +331,7 @@ observeEvent(input$ClassifierHelp_report, {
                        barplot(r_data$x,drop=TRUE, title= 'Genes Diseases Association', showCategory=10 ,digits=2)"),
                 "\n",
                 "\n```\n"
-  )
+                )
 
   cmd3 <-paste0("```{r fig.width=10.46, fig.height=5.54, dpi =72}\n",
                 paste0("options(scipen = 0, digits = 2)
@@ -361,7 +361,7 @@ observeEvent(input$ClassifierHelp_report, {
   cmd6 <-paste0("```{r fig.width=10.46, fig.height=5.54, dpi =72}\n",
                 paste0("options(scipen = 0, digits = 2)
                        if(!is.null(r_data$ckegg))
-                      clusterProfiler::dotplot(r_data$ckegg, title='KEGG Enrichment Comparison')"),
+                       clusterProfiler::dotplot(r_data$ckegg, title='KEGG Enrichment Comparison')"),
                 "\n",
                 "\n```\n"
                 )

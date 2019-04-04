@@ -1,75 +1,79 @@
+CHANGES IN VERSION 1.10.11 (04 April 2019)
+--------------------------------------------
++ update NEWS format
+
 CHANGES IN VERSION 1.10.1 (22 February 2019)
 ------------------------
-° Change the address of cgdsr: http://www.cbioportal.org/ instead http://www.cbioportal.org/public-portal/
+o Change the address of cgdsr: http://www.cbioportal.org/ instead http://www.cbioportal.org/public-portal/
 
 CHANGES IN VERSION 1.9.07 (04 September 2018)
 ------------------------
-° replace DOSE::dotplot by clusterProfiler::dotplot
-° replace r_data by r_info in reports
-° not need to define genelist in r_data
-° update ReactomeFI.RDS file (version 2017)
-° update DisGeNet0918.RDS file (version September 2018), move it from wiki.ubuntu.com to github/kmezhoud
+o replace DOSE::dotplot by clusterProfiler::dotplot
+o replace r_data by r_info in reports
+o not need to define genelist in r_data
+o update ReactomeFI.RDS file (version 2017)
+o update DisGeNet0918.RDS file (version September 2018), move it from wiki.ubuntu.com to github/kmezhoud
 
 CHANGES IN VERSION 1.9.06 (30 August 2018)
 ------------------------
-° rm warning message for min and max functions
-° run getFreqMutData() when getListProfData() instead getCoffeeWheel_Mut(). Avoid error when loading x profiles data to workspace.
-° include Tools panel into Workspace panel.
-° update Overview image
+o rm warning message for min and max functions
+o run getFreqMutData() when getListProfData() instead getCoffeeWheel_Mut(). Avoid error when loading x profiles data to workspace.
+o include Tools panel into Workspace panel.
+o update Overview image
 
 CHANGES IN VERSION 1.9.05 (25 August 2018)
 ------------------------
-° r_data vs r_info ... https://radiant-rstats.github.io/docs/news.html
-° use r_info for dataset list and r_data for genes list
-° set progress bar
+o r_data vs r_info ... https://radiant-rstats.github.io/docs/news.html
+o use r_info for dataset list and r_data for genes list
+o set progress bar
 
 CHANGES IN VERSION 1.9.04 (22 August 2018)
 ------------------------
-° add style.css file: raduce padding-top to 0px
+o add style.css file: raduce padding-top to 0px
 
 CHANGES IN VERSION 1.9.03 (16 August 2018)
 ------------------------
-° modify stop function
-° update paste gene list function
+o modify stop function
+o update paste gene list function
 
 CHANGES IN VERSION 1.9.02 (16 August 2018)
 ------------------------
-° upload and download using Rstudio file browser
+o upload and download using Rstudio file browser
   remove plot_downloader function and replace it by download_link (defined in radiant.R file)
-° add radiant_old.R file for needed functions but not longer used by radiant.data
+o add radiant_old.R file for needed functions but not longer used by radiant.data
 
 CHANGES IN VERSION 1.9.01 (12 August 2018)
 ------------------------
-  ° replace getdata() by get_data()
-  ° replace factorizer() by lapply(.,factor)
+  o replace getdata() by get_data()
+  o replace factorizer() by lapply(.,factor)
 
 CHANGES IN VERSION 1.7.05 (12 April 2018)
 ------------------------
-° omit importFrom clusterProfiler plot
+o omit importFrom clusterProfiler plot
 
 CHANGES IN VERSION 1.7.04 (20 November 2017)
 ------------------------
-° export Diagrammer and viNetwork to report
-° reset image size of circomics to 1024px
+o export Diagrammer and viNetwork to report
+o reset image size of circomics to 1024px
 
 CHANGES IN VERSION 1.7.03 (20 November 2017)
 ------------------------
-° Save network widgets as HTML and png
-° use swithc buttom for Networking Tab.
-° setwd(~)/ for windows system by setwd(Sys.getenv("R_USER"))
+o Save network widgets as HTML and png
+o use swithc buttom for Networking Tab.
+o setwd(~)/ for windows system by setwd(Sys.getenv("R_USER"))
 
 CHANGES IN VERSION 1.7.02 (14 November 2017)
 ------------------------
-° resolve conflicts renderMetabologram and renderCoffeewheel. redefine initCoffeewhell in /htmlwidges
-° report circomics widget to markdown document
-° Save static wheel as html and png (low resolution)
-° need  phantomJS to catupe html widget output as png file
+o resolve conflicts renderMetabologram and renderCoffeewheel. redefine initCoffeewhell in /htmlwidges
+o report circomics widget to markdown document
+o Save static wheel as html and png (low resolution)
+o need  phantomJS to catupe html widget output as png file
 
 CHANGES IN VERSION 1.7.01 (13 November 2017)
 ------------------------
-° add helps to ? menu
-° change stop message
-° addResourcePath for figures
+o add helps to ? menu
+o change stop message
+o addResourcePath for figures
 
 CHANGES IN VERSION 1.7.00 (30 October 2017)
 ------------------------

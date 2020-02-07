@@ -1,4 +1,4 @@
-context("bioCancer functions")
+context("bioCancer functions\n")
 
 #test_that("set_class", {
 # foo <- . %>% .^2 %>% set_class(c("foo", class(.)))
@@ -8,7 +8,7 @@ context("bioCancer functions")
 testthat::test_that("cgdsr connection",
                     {
                       mycgds <- cgdsr::CGDS("http://www.cbioportal.org/")
-                      result <- cgdsr::test(mycgds)
+                      cgdsr::test(mycgds)
                     })
 
 testthat::test_that("ReactomeFI connection",
@@ -19,7 +19,7 @@ testthat::test_that("ReactomeFI connection",
                       # install.packages('RCurl')
                       # install.packages('XML')
                       # library('Rcurl', 'XML')
-                      ReactomeResult <- queryBuildNetwork(2013, genes = c("TP53","BRCA1"))
+                      ReactomeResult <- getReactomeFI(2018, genes = c("TP53","BRCA1"))
                       cat('ReactomeFI connection... ',
                           checkEq(colnames(ReactomeResult), c("first.protein","second.protein"))
                       )

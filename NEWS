@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.14.01 (07 February 2020)
+------------------------
++ Change the address of reactomeFI from "http://reactomews.oicr.on.ca:8080/" to  "http://cpws.reactome.org/"
++ update ReactomeFI2018.RDS to "FIsInGene_122718_with_annotations.txt.zip"
+
 CHANGES IN VERSION 1.11.00 (12 February 2019)
 ------------------------
 + Change the address of cgdsr: http://www.cbioportal.org/ instead http://www.cbioportal.org/public-portal/

@@ -10,9 +10,6 @@ bioCancer()
 \value{
 web page of bioCancer Shiny App
 }
-\description{
-Launch bioCancer with default browser
-}
 \examples{
 ShinyApp <-  1
 \dontrun{

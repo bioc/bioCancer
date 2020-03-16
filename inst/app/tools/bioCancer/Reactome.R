@@ -38,19 +38,19 @@ Edges_obj <- reactive({
       #r_data[['ReactomeFI']]  <- read.delim("inst/extdata/FIsInGene_121514_with_annotations.txt")
 
       ## How to create RDS file
-      # download.file("http://reactomews.oicr.on.ca:8080/caBigR3WebApp2017/FIsInGene_071718_with_annotations.txt.zip", tmp <- tempfile())
+      # download.file("http://cpws.reactome.org/caBigR3WebApp2018/FIsInGene_122718_with_annotations.txt.zip", tmp <- tempfile())
       # db = read.delim(unzip(tmp))
       # OR
-      # db <- read.delim("FIsInGene_071718_with_annotations.txt", header = T)
-      # saveRDS(db, "ReactomeFI2017.RDS");
+      # db <- read.delim("FIsInGene_122718_with_annotations.txt", header = T)
+      # saveRDS(db, "ReactomeFI2018.RDS");
       # file.size("xxx.RDS")
 
       if ("package:bioCancer" %in% search()) {
         r_data[['ReactomeFI']]  <- readRDS(paste0(system.file(package = "bioCancer"),
-                                                  "/extdata/ReactomeFI2017.RDS", sep=""))
+                                                  "/extdata/ReactomeFI2018.RDS", sep=""))
       }else{
         r_data[['ReactomeFI']]  <- readRDS(file.path(paste(getOption("radiant.path.bioCancer"),
-                                                           "/extdata/ReactomeFI2017.RDS", sep="")))
+                                                           "/extdata/ReactomeFI2018.RDS", sep="")))
       }
 
     })

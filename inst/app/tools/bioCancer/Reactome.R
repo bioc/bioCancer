@@ -176,7 +176,7 @@ getAnnoGeneSet_obj <- function(genelist,type, fdr){
     GeneSet_obj <- NULL
   }else{
     ## Query GeneSet Annotation
-    AnnoGeneSet <- queryAnnotateGeneSet(2014, t(genelist) ,type)
+    AnnoGeneSet <- queryAnnotateGeneSet(2018, t(genelist) ,type)
     #AnnoGeneSet_bkp <<- AnnoGeneSet
     if(nrow(AnnoGeneSet)== 0){
       GeneSet_obj <- data.frame(Gene1 = "",

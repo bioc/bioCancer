@@ -161,12 +161,12 @@ loadClipboard_GeneList <- function(objname = "User_Genes", ret = "", header = FA
   if (is(dat, 'try-error') || nrow(dat) == 0) {
     if (ret == "") ret <- c("### Gene List in clipboard was not well formatted.")
     upload_error_handler(objname,ret)
-    r_data[['genelist']] <- c("DNA_damage_Response",r_data[['genelist']]) %>% unique
+    r_data[['genelist']] <- c("DNA_damage_Response", r_data[['genelist']]) %>% unique
   } else {
     ret <- paste0("### Clipboard data\nData copied from clipboard on", lubridate::now())
     r_data[[objname]] <- dat
     r_data[[paste0(objname,"_descr")]] <- ret
-    r_data[['genelist']] <- c(objname,r_data[['genelist']]) %>% unique
+    r_data[['genelist']] <- c(objname, r_data[['genelist']]) %>% unique
   }
 
 }

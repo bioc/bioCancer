@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.15.03 (18 March 2020)
+------------------------
++ Downgrade DiegrammeR from 1.05 to 1.01. Unable to run a Shiny App using grVizOutput() and renderGrViz()
+
 CHANGES IN VERSION 1.15.02 (17 March 2020)
 ------------------------
 + update help page

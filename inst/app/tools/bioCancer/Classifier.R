@@ -131,7 +131,7 @@ output$Plot_enricher <- renderPlot({
     ## clusterProfile package
     #GeneID = bitr(GeneList, fromType="SYMBOL", toType="ENTREZID", annoDb="org.Hs.eg.db")[,2]
     ## Symbol2GeneID
-    GeneID<- unname(unlist(AnnotationFuncs::translate(GeneList, org.Hs.eg.db::org.Hs.egSYMBOL2EG)))
+    GeneID<- unname(unlist(bioCancer::translate(GeneList, org.Hs.eg.db::org.Hs.egSYMBOL2EG)))
 
 
     ## How to create DisGeNet.RDS file
@@ -192,7 +192,7 @@ output$compareClusterDO <- renderPlot({
   shiny::withProgress(message = 'Disease Ontology enrich...', value = 1, {
 
     genesGroups <- lapply(r_data$GenesClassDetailsForPlots, function(x)rownames(x))
-    GroupsID <- lapply(genesGroups,function(x) unname(unlist(AnnotationFuncs::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
+    GroupsID <- lapply(genesGroups,function(x) unname(unlist(bioCancer::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
 
     if (inherits(try(cdo <- clusterProfiler::compareCluster(GroupsID, fun="enrichDO"), silent=TRUE),"try-error"))
     {print("No enrichment found in any of gene cluster, please check your input...")
@@ -222,7 +222,7 @@ output$compareClusterReactome <- renderPlot({
     #   require(reactome.db)
     #  require(ReactomePA)
     genesGroups <- lapply(r_data$GenesClassDetailsForPlots, function(x)rownames(x))
-    GroupsID <- lapply(genesGroups,function(x) unname(unlist(AnnotationFuncs::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
+    GroupsID <- lapply(genesGroups,function(x) unname(unlist(bioCancer::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
 
     if (inherits(try(cdp <- clusterProfiler::compareCluster(GroupsID, fun="enrichPathway"), silent=TRUE),"try-error"))
     { print("No Reactome enrichment found in any of gene cluster, please check your input...")
@@ -246,7 +246,7 @@ output$compareClusterGO <- renderPlot({
   shiny::withProgress(message = 'Gene Ontology Enrich...', value = 1, {
 
     genesGroups <- lapply(r_data$GenesClassDetailsForPlots, function(x)rownames(x))
-    GroupsID <- lapply(genesGroups,function(x) unname(unlist(AnnotationFuncs::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
+    GroupsID <- lapply(genesGroups,function(x) unname(unlist(bioCancer::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
     if (inherits(try(cgo <- clusterProfiler::compareCluster(GroupsID, fun="enrichGO",OrgDb='org.Hs.eg.db')),"try-error"))
     {
       print("No Gene Ontology enrichment found in any of gene cluster, please check your input...")
@@ -271,7 +271,7 @@ output$compareClusterKEGG <- renderPlot({
   shiny::withProgress(message = 'KEGG Pathway Enrich...', value = 1, {
 
     genesGroups <- lapply(r_data$GenesClassDetailsForPlots, function(x)rownames(x))
-    GroupsID <- lapply(genesGroups,function(x) unname(unlist(AnnotationFuncs::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
+    GroupsID <- lapply(genesGroups,function(x) unname(unlist(bioCancer::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
     if (inherits(try(cgo <- clusterProfiler::compareCluster(GroupsID, fun="enrichKEGG")),"try-error"))
     {
       #print("No KEGG enrichment found in any of gene cluster, please check your input...")
@@ -296,7 +296,7 @@ output$compareClusterCC<- renderPlot({
   shiny::withProgress(message = 'Cellular Component enrichment...', value = 1, {
 
     genesGroups <- lapply(r_data$GenesClassDetailsForPlots, function(x)rownames(x))
-    GroupsID <- lapply(genesGroups,function(x) unname(unlist(AnnotationFuncs::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
+    GroupsID <- lapply(genesGroups,function(x) unname(unlist(bioCancer::translate(x, org.Hs.eg.db::org.Hs.egSYMBOL2EG))))
     if (inherits(try(cgo <- clusterProfiler::compareCluster(GroupsID, fun="groupGO", OrgDb='org.Hs.eg.db')),"try-error"))
     {
       print("No Cellular Component enrichment found in any of gene cluster, please check your input...")

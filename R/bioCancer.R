@@ -17,7 +17,6 @@
 #' @importFrom geNetClassifier genesDetails
 #' @importFrom Biobase ExpressionSet
 #' @importFrom Biobase exprs
-#' @importFrom AnnotationFuncs translate
 #' @importFrom org.Hs.eg.db org.Hs.egSYMBOL2EG
 #' @import DOSE
 #' @importFrom clusterProfiler enricher

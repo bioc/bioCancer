@@ -2,7 +2,7 @@
 #'
 #' @return  web page of bioCancer Shiny App
 #' @usage bioCancer()
-#'
+#' @description The main function to run the app
 #' @examples
 #' ShinyApp <-  1
 #' \dontrun{

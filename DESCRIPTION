@@ -41,6 +41,7 @@ Suggests:
     testthat (>= 0.10.0)
 VignetteBuilder: 
     knitr
+Remotes: cBioPortal/cgdsr
 URL: http://kmezhoud.github.io/bioCancer
 BugReports: https://github.com/kmezhoud/bioCancer/issues
 License: AGPL-3 | file LICENSE

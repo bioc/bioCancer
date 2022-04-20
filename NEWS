@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.23.02 (19 April 2022)
+--------------------------------------------
++ Update NEWS
+
+CHANGES IN VERSION 1.23.01 (14 April 2022)
+--------------------------------------------
++ get cgdsr from github
+
 CHANGES IN VERSION 1.15.03 (18 March 2020)
 ------------------------
 + Downgrade DiegrammeR from 1.05 to 1.01. Unable to run a Shiny App using grVizOutput() and renderGrViz()

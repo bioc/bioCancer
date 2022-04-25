@@ -13,7 +13,7 @@ output$ClassifierHowto <- renderPrint({
 #   shiny::withProgress(message = 'loading Cases...', value = 0.1, {
 #     Sys.sleep(0.25)
 #     checked_Studies <- input$StudiesIDClassifier
-#     listCases <- lapply(checked_Studies, function(x) cgdsr::getCaseLists(cgds,x)[,1])
+#     listCases <- lapply(checked_Studies, function(x) getCaseLists(cgds,x)[,1])
 #     names(listCases) <- checked_Studies
 #     listCases <- lapply(listCases, function(x) x[grep("v2_mrna", x)])
 #     listCases <- listCases[lapply(listCases,length)>0]
@@ -28,7 +28,7 @@ output$ClassifierHowto <- renderPrint({
 #   shiny::withProgress(message = 'loading Genetic Profiles...', value = 0.1, {
 #     Sys.sleep(0.25)
 #     checked_Studies <- input$StudiesIDClassifier
-#     listGenProfs <- lapply(checked_Studies, function(x) cgdsr::getGeneticProfiles(cgds,x)[,1])
+#     listGenProfs <- lapply(checked_Studies, function(x) getGeneticProfiles(cgds,x)[,1])
 #     names(listGenProfs) <- checked_Studies
 #     listGenProfs <- lapply(listGenProfs, function(x) x[grep("v2_mrna$", x)])
 #     listGenProfs <- listGenProfs[lapply(listGenProfs,length)>0]
@@ -47,7 +47,7 @@ TableCases <- reactive({
   shiny::withProgress(message = 'loading Sample size...', value = 1, {
 
     checked_Studies <- input$StudiesIDClassifier
-    listCases <- lapply(checked_Studies, function(x) cgdsr::getCaseLists(cgds,x)[,3])
+    listCases <- lapply(checked_Studies, function(x) getCaseLists(cgds,x)[,3])
     #listGenProf <- lapply(checked_Studies, function(x)getGeneticProfiles(cgds,x)[,2])
     matchedCases <- lapply(listCases, function(x) x[grep("mRNA expression", x)])
     #matchedGenProf <- lapply(listGenProf, function(x)x[grep("mRNA expression",x)])

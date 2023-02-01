@@ -38,11 +38,13 @@ from the prefix (\url{http://www.ncbi.nlm.nih.gov/refseq/key.html}).  E.g. "XM_"
 predicted mRNA and "NP_" is a protein. Run \code{?org.Bt.egREFSEQ}.
 }
 \examples{
+\dontrun{
 library(org.Bt.eg.db)
 symbols <- c("SERPINA1","KERA","CD5")
 refseq <- translate(symbols, from=org.Bt.egSYMBOL2EG, to=org.Bt.egREFSEQ)
 mRNA <- pickRefSeq(refseq, priorities=c('NM','XM'))
 proteins <- pickRefSeq(refseq, priorities=c('NP','XP'))
+}
 }
 \author{
 Stefan McKinnon Edwards \email{stefan.hoj-edwards@agrsci.dk}

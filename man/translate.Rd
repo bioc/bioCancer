@@ -67,6 +67,7 @@ See \code{\link{pickGO}}.
 Requires user to deliver the annotation packages such as org.Bt.egREFSEQ.
 }
 \examples{
+\dontrun{
 library(org.Bt.eg.db)
 genes <- c(280705, 280706, 100327208)
 translate(genes, org.Bt.egSYMBOL)
@@ -85,6 +86,7 @@ GO <- translate(genes, org.Bt.egGO)
 pickGO(GO, category='BP')
 # Get all ontologies with experimental evidence:
 pickGO(GO, evidence=c('IMP','IGI','IPI','ISS','IDA','IEP','IEA'))
+}
 }
 \seealso{
 \code{\link{pickRefSeq}}, \code{\link{pickGO}}

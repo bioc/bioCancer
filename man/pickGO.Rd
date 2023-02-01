@@ -26,6 +26,7 @@ Can be used on list of GOs from \code{\link{translate}}, or a single list of GOs
 May reduce list, if the (sub)list does not contain the chosen class!
 }
 \examples{
+\dontrun{
 library(org.Bt.eg.db)
 genes <- c(280705, 280706, 100327208)
 GO <- translate(genes, org.Bt.egGO)
@@ -33,6 +34,8 @@ GO <- translate(genes, org.Bt.egGO)
 pickGO(GO, category='BP')
 # Get all ontologies with experimental evidence:
 pickGO(GO, evidence=c('IMP','IGI','IPI','ISS','IDA','IEP','IEA'))
+pickGO <- function(l, evidence=c('IMP','IGI','IPI','ISS','IDA','IEP','IEA','TAS','NAS','ND','IC'), category=c('BP','CC','MF'))
+}
 }
 \seealso{
 \code{\link{pickRefSeq}}, \code{\link{getEvidenceCodes}}, \code{\link{translate}}

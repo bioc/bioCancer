@@ -14,7 +14,7 @@ library(R.oo)
 #'
 #' @usage CGDS(url,verbose=FALSE,ploterrormsg='',token=NULL)
 #'
-#' @export
+#' @export CGDS
 setConstructorS3("CGDS", function(url='',verbose=FALSE,ploterrormsg='',token=NULL) {
   R.oo::extend(R.oo::Object(), "CGDS",
          .url=url,

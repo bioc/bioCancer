@@ -24,6 +24,7 @@ using the Inparanoid databases.
 Other functions include functions for selecting Refseqs or Gene Ontologies (GO).
 }
 \examples{
+\dontrun{
 library(org.Bt.eg.db)
 gene.symbols <- c('DRBP1','SERPINA1','FAKE','BLABLA')
 # Find entrez identifiers of these genes.
@@ -34,6 +35,7 @@ eg <- translate(gene.symbols, org.Bt.egSYMBOL2EG)
 refseq <- translate(gene.symbols, from=org.Bt.egSYMBOL2EG, to=org.Bt.egREFSEQ)
 # Pick the proteins:
  pickRefSeq(refseq, priorities=c('NP','XP'), reduce='all')
+ }
 }
 \references{
 \url{http://www.iysik.com/index.php?page=annotation-functions}

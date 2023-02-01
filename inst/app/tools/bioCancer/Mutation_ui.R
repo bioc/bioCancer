@@ -1,9 +1,9 @@
 output$ui_Mut_vars <- renderUI({
 
-  shiny::withProgress(message = 'loading Variables of Mutation Data from cgdsr server...', value = 1, {
+  shiny::withProgress(message = 'loading Variables of Mutation Data from server...', value = 1, {
 
   GeneList <- whichGeneList(input$GeneListID)
-  dat <- cgdsr::getMutationData(cgds,
+  dat <- getMutationData(cgds,
                                 input$CasesID,
                                 input$GenProfID,
                                 GeneList)

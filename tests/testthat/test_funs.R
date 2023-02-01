@@ -19,7 +19,7 @@ testthat::test_that("ReactomeFI connection",
                       # install.packages('RCurl')
                       # install.packages('XML')
                       # library('Rcurl', 'XML')
-                      ReactomeResult <- getReactomeFI(2018, genes = c("TP53","BRCA1"))
+                      ReactomeResult <- getReactomeFI(2021, genes = c("TP53","BRCA1"))
                       cat('ReactomeFI connection... ',
                           checkEq(colnames(ReactomeResult), c("first.protein","second.protein"))
                       )

@@ -1,3 +1,11 @@
+CHANGES IN VERSION 1.26.04 (03 Februry 2023)
+--------------------------------------------
++ update ReactomeFO2021 and DisGeNet0223.RDS
+
+CHANGES IN VERSION 1.26.01 (01 Februry 2023)
+--------------------------------------------
++ cleanup cgdsr
+
 CHANGES IN VERSION 1.23.03 (25 April 2022)
 --------------------------------------------
 + host cgdsr

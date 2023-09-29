@@ -4,7 +4,7 @@
 \alias{setVerbose.CGDS}
 \title{S3 method to set verbose}
 \usage{
-setVerbose.CGDS(x, verbose, ...)
+\method{setVerbose}{CGDS}(x, verbose, ...)
 }
 \arguments{
 \item{x}{A connection object}

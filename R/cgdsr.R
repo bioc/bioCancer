@@ -27,12 +27,13 @@ setConstructorS3("CGDS", function(url='',verbose=FALSE,ploterrormsg='',token=NUL
 #'
 #' @description These methods should not be invoked by the user.
 #'
-#' @usage processURL.CGDS(x, url, force.comment.char.blank, ...)
 #'
 #' @param x A connection object
 #' @param url URL
 #' @param force.comment.char.blank a boolean param to force comment
 #' @param ... not used
+#'
+#' @method processURL CGDS
 #'
 #' @export processURL.CGDS
 #'
@@ -64,12 +65,12 @@ setMethodS3("processURL","CGDS", private=TRUE, function(x, url, force.comment.ch
 #' S3 method to set verbose
 #' @description Sets verbose logging level for CGDS function calls.
 #'
-#' @usage setVerbose.CGDS(x, verbose, ...)
 #'
 #' @param x A connection object
 #' @param verbose Activate verbose logging (boolean)
 #' @param ... not used
 #'
+#' @method setVerbose CGDS
 #' @examples
 #' # Create CGDS object
 #' mycgds <- CGDS("http://www.cbioportal.org/")
@@ -84,10 +85,10 @@ setMethodS3("setVerbose","CGDS", function(x, verbose, ...) {
 
 #' S3 method to get Cancer Studies
 #'
-#' @usage getCancerStudies.CGDS(x, ...)
 #' @param x connection object
 #' @param ... not used
 #'
+#' @method getCancerStudies CGDS
 #' @examples
 #' # Create CGDS object
 #' mycgds <- CGDS("http://www.cbioportal.org/")
@@ -104,11 +105,11 @@ setMethodS3("getCancerStudies","CGDS", function(x, ...) {
 
 #' S3 method to get Cases Lists
 #'
-#' @usage getCaseLists.CGDS(x, cancerStudy,...)
 #' @param x connection object
 #' @param cancerStudy cancer study ID
 #' @param ... Not used
 #'
+#' @method getCaseLists  CGDS
 #' @examples
 #' # Create CGDS object
 #' mycgds <- CGDS("http://www.cbioportal.org/")
@@ -126,11 +127,11 @@ setMethodS3("getCaseLists","CGDS", function(x, cancerStudy, ...) {
 
 #' S3 method to get Genetic Profiles
 #'
-#' @usage getGeneticProfiles.CGDS(x, cancerStudy, ...)
 #' @param x connection object
 #' @param cancerStudy cancer study ID
 #' @param ... not used
 #'
+#' @method getGeneticProfiles CGDS
 #' @examples
 #' # Create CGDS object
 #' mycgds <- CGDS("http://www.cbioportal.org/")
@@ -152,13 +153,13 @@ setMethodS3("getGeneticProfiles","CGDS", function(x, cancerStudy, ...) {
 
 #' S3 method to ge Mutation Data
 #'
-#' @usage getMutationData.CGDS(x, caseList, geneticProfile, genes, ...)
 #' @param x connection object
 #' @param caseList A case list ID
 #' @param geneticProfile A genetic profile ID with mutation data
 #' @param genes A vector of genes list
 #' @param ... not used
 #'
+#' @method getMutationData CGDS
 #'
 #' @examples
 #' #Create CGDS object
@@ -178,7 +179,6 @@ setMethodS3("getMutationData","CGDS", function(x, caseList, geneticProfile, gene
 
 #' S3 method to get Profile Data
 #'
-#' @usage getProfileData.CGDS(x, genes, geneticProfiles, caseList, cases, caseIdsKey, ...)
 #' @param x connection object
 #' @param genes A genes list
 #' @param geneticProfiles A genetic Profile ID
@@ -186,6 +186,8 @@ setMethodS3("getMutationData","CGDS", function(x, caseList, geneticProfile, gene
 #' @param cases A vector of cases ID
 #' @param caseIdsKey Only used by web portal
 #' @param ... not used
+#'
+#' @method getProfileData CGDS
 #'
 #' @examples
 #' # Create CGDS object
@@ -235,12 +237,13 @@ setMethodS3("getProfileData","CGDS", function(x, genes, geneticProfiles, caseLis
 
 #' S3 method to get Clinical Data
 #'
-#' @usage getClinicalData.CGDS(x, caseList, cases, caseIdsKey, ...)
 #' @param x connection object
 #' @param caseList A list of cases ID
 #' @param cases A vector of case IDs
 #' @param caseIdsKey only used by web portal
 #' @param ... not used
+#'
+#' @method getClinicalData CGDS
 #'
 #' @examples
 #' #Create CGDS object
@@ -555,7 +558,8 @@ setMethodS3("getClinicalData","CGDS", function(x, caseList='', cases=c(), caseId
 
 #' S3 method to test cBioPortal connection
 #'
-#' @usage test.CGDS(x, ...)
+#'
+#' @method test CGDS
 #'
 #' @param x connection object
 #' @param ... not used

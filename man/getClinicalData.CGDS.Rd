@@ -4,7 +4,7 @@
 \alias{getClinicalData.CGDS}
 \title{S3 method to get Clinical Data}
 \usage{
-getClinicalData.CGDS(x, caseList, cases, caseIdsKey, ...)
+\method{getClinicalData}{CGDS}(x, caseList = "", cases = c(), caseIdsKey = "", ...)
 }
 \arguments{
 \item{x}{connection object}

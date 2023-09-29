@@ -29,7 +29,7 @@ knitr::opts_chunk$set(tidy = FALSE,
 bioCancer is a platform-independent interface for dynamic interaction with cancer genomics data. The web is implemented in the R language and based on the Shiny package. It runs on any modern Web browser and requires no programming skills, increasing the accessibility to the huge, complex and heterogeneous cancer genomic data. The data are provided from cBioPortal that contains data from 105 cancer genomics studies. The studies are updated monthly, based on the last TCGA production runs. User can access easily to studies, search in clinical data or by genetic profiles. All data are displayed in table which user can filter, combine, download, visualize and get statistics on it. For more global exploring, zoomable circular layout are available to merge and view around twenty matrices in the same plot. The circular layout makes easy and rapid to identify pertinent multi-assays changes in genes through multiple cancers or studies.
 The web page implements multiple methods, to classify genes by study or by disease, to cluster studies by biological process or other ontology annotation. From gene list user can predicts functional interaction network. Nodes and edges can be colored and formatted by omics cancer data. User is free to choose which dimension will be included in network and can set some thresholds to view only significant biological scenario.
 The web accepts multiple format of input data that can be included by user to compare/analysis with/without cancer studies. All investigation done by user can be saved in session and can be reloaded later or shared with colleagues. The main R plotting features are available and easy to use. User needs only to chose the type of plot and select variables to be viewed. All generated plot is downloadable with a high resolution.
- bioCancer has dynamic sidebar dashboard that changes and displays functionalities depending on user request. It reduces excessive clicking or false queries. It can be launched in local machine with any system with R installed or used from a remote server as in ([bioCancer Server ](http://46.101.227.144:3838/bioCancer/)). All navigating panel are well assisted and documented by examples.
+ bioCancer has dynamic sidebar dashboard that changes and displays functionalities depending on user request. It reduces excessive clicking or false queries. It can be launched in local machine with any system with R installed. All navigating panel are well assisted and documented by examples.
 bioCancer is free and open to all users and there is no login requirement.
 
 ## Pipeline Overview
@@ -120,7 +120,7 @@ There are in general but not always, 6 types of genetic profiles:
 * microRNA expression ([miRNA](https://en.wikipedia.org/wiki/MicroRNA))
 * Reverse Phase Protein Array ([RPPA](https://en.wikipedia.org/wiki/Reverse_phase_protein_lysate_microarray))
 
-It is possible to find other kind of data related to one of listed types. For example the `log` or [z_score](http://www.cbioportal.org/faq.jsp#what-are-mrna-and-microrna-z-scores) of mRNA expression.
+It is possible to find other kind of data related to one of listed types. For example the `log` or [z_score](https://docs.cbioportal.org/user-guide/faq/#what-are-mrna-and-microrna-z-scores) of mRNA expression.
 
 #### Load Gene List
 User can upload gene list examples or upload own gene list.
@@ -142,7 +142,7 @@ It is interesting to get any statistics analysis or transformation with genetic 
 When you start bioCancer a dataset (`epiGenomics`) with information on how it was formatted is shown in `Processing` panel.
 
 It is good practice to add a description of the data and variables to each file you use. For the files that are part of bioCancer you will see a brief overview of the variables etc. below the table of the first 10 rows of the data. If you would like to add a description for your own data check the 'Add/edit data description' check-box. A window will open below the data table where you can add text in
-<a href="http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html" target="_blank">markdown</a> format. The descriptions of the data included with bioCancer should serve as a good starting point.
+<a href="https://pandoc.org/MANUAL.html#pandocs-markdown" target="_blank">markdown</a> format. The descriptions of the data included with bioCancer should serve as a good starting point.
 
 If you would like to rename a dataset loaded in bioCancer check the `Rename data` box, enter a new name for the data, and click the `Rename` button
 
@@ -163,7 +163,7 @@ To access all data files bundled with bioCancer choose `examples` from the `Load
 As mentioned above, the most convenient way to get data in and out of bioCancer is to use the R-data format (rda). Choose `rda` from the `Save data` dropdown and click the `Save data` button to save selected dataset to file.
 
 It is good practice to add a description of the data and variables to each file you use. For the files that are part of bioCancer you will see a brief overview of the variables etc. below the table of the first 10 rows of the data. If you would like to add a description for your own data check the 'Add/edit data description' check-box. A window will open below that data table where you can add text in
-<a href="http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html" target="_blank">markdown</a> format. The descriptions of the data included with bioCancer should serve as a good starting point. When you save the data as an rda file the description you created (or edited) will automatically be added to the file.
+<a href="https://pandoc.org/MANUAL.html" target="_blank">markdown</a> format. The descriptions of the data included with bioCancer should serve as a good starting point. When you save the data as an rda file the description you created (or edited) will automatically be added to the file.
 
 Getting data from bioCancer into a spreadsheet can be achieved in two ways. First, you can save data in csv format and load the file into the spreadsheet (i.e., choose `csv` from the `Save data` dropdown and click the `Save data` button). Alternatively, you can copy the data from bioCancer into the clipboard by choosing `clipboard` from the dropdown and clicking the `Copy data` button, open the spreadsheet, and paste the data from bioCancer using CTRL-V (or CMD-V on mac).
 
@@ -173,7 +173,7 @@ You can save and load the state of the bioCancer app just as you would a data fi
 
 The best way to save your analyses is to save the state of the app to a file by clicking on the <i title='Save' class='fa fa-save'></i> icon in the navbar and then on `Save state`. Similar functionality is available in `Data > Manage` tab.
 
-This is convenient if you want to save your work to be completed at another time, perhaps on another computer, or to review any assignments you completed using bioCancer. You can also share the file with others that would like to replicate your analyses. As an example, download and then load the state_file [`RadiantState.rda`](https://vnijs.github.io/radiant/examples/RadiantState.rda). Go to `Data > View`, `Data > Visualize` to see some of the settings loaded from the statefile. There is also a report in `R > Report` created using the Radiant interface. The html file <a href="https://vnijs.github.io/radiant/examples/RadiantState.html" target="_blank">`RadiantState.html`</a> contains the output.
+This is convenient if you want to save your work to be completed at another time, perhaps on another computer, or to review any assignments you completed using bioCancer. You can also share the file with others that would like to replicate your analyses. As an example, download and then load the state_file [`RadiantState.rda`](https://radiant-rstats.github.io/radiant.data/articles/pkgdown/manage.html). Go to `Data > View`, `Data > Visualize` to see some of the settings loaded from the statefile. There is also a report in `R > Report` created using the Radiant interface. The html file <a href="https://radiant-rstats.github.io/radiant.data/articles/pkgdown/manage.html" target="_blank">`RadiantState.html`</a> contains the output.
 
 A related feature in bioCancer is that state is maintained if you accidentally navigate to another page, close (and reopen) the browser, and/or hit refresh. Use `Reset` in the <i title='Power off' class='fa fa-power-off'></i> menu in the navigation bar to return to a clean/new state.
 
@@ -278,7 +278,7 @@ For variables that have a limited number of different values (i.e., a factor) yo
 
 For numeric variables the column filter boxes have some special features that make them almost as powerful as the `Filter` box. For numerical and integer variables you can use `...` to indicate a range. For example, to select `mRNA` values between 200 and 500  type `200 ... 500` and press return. The range is inclusive of the values typed. Furthermore, if we want to filter on `FreqMut` `20 ...` will show only Studies with mutation frequancy larger than or equal to 20. Numeric variables also have a slider that you can use to define the range of values to keep.
 
-If you want to get _really_ fancy you can use the search box on the top right to search across all columns in the data using **regular expressions**. For example, to find all rows that have an entry in _any_ column ending with the number 72 type `72$` (i.e., the `$` sign is used to indicate the end of an entry). For all rows with entries that start with 60 use `^60` (i.e., the `^` is used to indicate the first character in an entry). Regular expressions are incredibly powerful for search but this is a _big_ topic area. To learn more about regular expressions see this <a href="http://www.regular-expressions.info/tutorial.html" target="_blank">tutorial</a>.
+If you want to get _really_ fancy you can use the search box on the top right to search across all columns in the data using **regular expressions**. For example, to find all rows that have an entry in _any_ column ending with the number 72 type `72$` (i.e., the `$` sign is used to indicate the end of an entry). For all rows with entries that start with 60 use `^60` (i.e., the `^` is used to indicate the first character in an entry). Regular expressions are incredibly powerful for search but this is a _big_ topic area. To learn more about regular expressions see this <a href="https://www.regular-expressions.info/tutorial.html" target="_blank">tutorial</a>.
 
 It is important to note that column sorting, column filters, and search are **not** persistent. To store these settings for use in other parts of bioCancer press the `Store` button. You can store the data and settings under a different dataset name by changing the value in the text input to the left of the `Store` button. This feature can also be used to select a subset of variables to keep. Just select the ones you want to keep and press the `Store` button. For more control over the variables you want to keep or remove and to specify their order in the dataset use the `Data > Transform` tab.
 
@@ -304,7 +304,7 @@ In sum:
 You may have to read the two bullets above a few times before it sinks in. The plot below should help to explain the structure of the box plot.
 
 ![Box-plot](figures/boxplot.png)
-[Source](http://en.wikipedia.org/wiki/File:Boxplot_vs_PDF.svg)
+[Source](https://en.wikipedia.org/wiki/File:Boxplot_vs_PDF.svg)
 
 ### Sub-plots and heat-maps
 
@@ -339,7 +339,7 @@ visualize(dataset = "diamonds", yvar = "price", xvar = "carat", type = "scatter"
   ggtitle("A scatterplot") + xlab("price in $")
 ```
 
-See the ggplot2 documentation page for available options <a href="http://docs.ggplot2.org/" target="_blank">http://docs.ggplot2.org</a>.
+See the ggplot2 documentation page for available options <a href="https://ggplot2.tidyverse.org/" target="_blank">https://docs.ggplot2.org</a>.
 
 ## Create pivot tables to explore your data
 
@@ -567,9 +567,9 @@ If there are duplicates in the data use `Show duplicates` to get a better sense 
 
 ## Combine two datasets
 
-There are six _join_ (or _merge_) options available in bioCancer from the [dplyr](http://www.rdocumentation.org/packages/dplyr) package developed by Hadley Wickham and Romain Francois on [GitHub](https://github.com/hadley/dplyr).
+There are six _join_ (or _merge_) options available in bioCancer from the [dplyr](https://www.rdocumentation.org/packages/dplyr) package developed by Hadley Wickham and Romain Francois on [GitHub](https://github.com/tidyverse/dplyr).
 
-The examples below are adapted from [Cheatsheet for dplyr join functions](http://stat545-ubc.github.io/bit001_dplyr-cheatsheet.html) by Jenny Bryan and focus on three small datasets, `superheroes`, `publishers`, and `avengers`, to illustrate the different _join_ types and other ways to combine datasets in R and bioCancer. The data is also available in csv format through the links below:
+The examples below are adapted from [Cheatsheet for dplyr join functions](https://posit.co/resources/cheatsheets/) by Jenny Bryan and focus on three small datasets, `superheroes`, `publishers`, and `avengers`, to illustrate the different _join_ types and other ways to combine datasets in R and bioCancer. The data is also available in csv format through the links below:
 
 <a href="https://github.com/vnijs/radiant/blob/gh-pages/examples/superheroes.csv" target = "_blank">superheroes.csv</a>
 
@@ -1596,7 +1596,7 @@ The bioCancer commands are the same as shown above, except you will need to repl
 <br>
 
 --------
-For additional discussion see <http://cran.r-project.org/web/packages/dplyr/vignettes/two-table.html>
+For additional discussion see <https://dplyr.tidyverse.org/articles/two-table.html>
 
 # Enrichment Panel
 
@@ -1627,7 +1627,7 @@ For every dimension, the tables are merged by study and saved as: `xCNA`, `xMetH
 ## Genes / Diseases / Pathways Classification and clustering
 
 ### Classification
-The classifier uses `geNetClassifier` methods [1] to classify genes by disease based only on gene expression (mRNA). The approach is implemented in an R package, named [geNetClassifier](http://bioconductor.org/packages/release/bioc/html/geNetClassifier.html), available as an open access tool in [Bioconductor](http://bioconductor.org/).
+The classifier uses `geNetClassifier` methods [1] to classify genes by disease based only on gene expression (mRNA). The approach is implemented in an R package, named [geNetClassifier](https://bioconductor.org/packages/release/bioc/html/geNetClassifier.html), available as an open access tool in [Bioconductor](https://bioconductor.org/).
 All proccess are resumed into 5 steps:
 * Select Studies
 * get sample size by  `processing` > `Samples` 
@@ -1644,7 +1644,7 @@ The resulting output is a table (Table 1) that associates genes to study and dis
 ### Plot Clusters
 
 #### Gene Diseases Association
-`GeneList/Diseases` predicts Wich disease are involving your GeneList. It uses annotations from [DisGeNET](http://www.disgenet.org/web/DisGeNET/menu;jsessionid=1bxru0uf4yelm16ipuhie2qhij) [2] and Methods from [clusterProfiler](http://bioconductor.org/packages/release/bioc/html/clusterProfiler.html) package [3].  
+`GeneList/Diseases` predicts Wich disease are involving your GeneList. It uses annotations from [DisGeNET](https://www.disgenet.org/) [2] and Methods from [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html) package [3].  
 
 The `GeneList/Diseases` association uses gene list as input. The assess of this prediction is based on two parameters:
 * The number of genes that are involving in the disease (x-axis)
@@ -1733,13 +1733,13 @@ User needs to
 
 
 #### References
-[1] Aibar S, Fontanillo C, Droste C, Roson-Burgo B, Campos-Laborie F, Hernandez-Rivas J and De Las Rivas J (2015). “Analyse multiple disease subtypes and build associated gene networks using genome-wide expression profiles.” BMC Genomics, 16(Suppl 5:S3). http://dx.doi.org/10.1186/1471-2164-16-S5-S3.
+[1] Aibar S, Fontanillo C, Droste C, Roson-Burgo B, Campos-Laborie F, Hernandez-Rivas J and De Las Rivas J (2015). “Analyse multiple disease subtypes and build associated gene networks using genome-wide expression profiles.” BMC Genomics, 16(Suppl 5:S3). https://dx.doi.org/10.1186/1471-2164-16-S5-S3.
 
-[2] Piñero, J., Queralt-Rosinach, N., Bravo, A., Deu-Pons, J., Bauer-Mehren, A., Baron, M., Ferran Sanz, and Furlong, L. I. (2015). DisGeNET: a discovery platform for the dynamical exploration of human diseases and their genes. Database: The Journal of Biological Databases and Curation, 2015, bav028. http://doi.org/10.1093/database/bav028
+[2] Piñero, J., Queralt-Rosinach, N., Bravo, A., Deu-Pons, J., Bauer-Mehren, A., Baron, M., Ferran Sanz, and Furlong, L. I. (2015). DisGeNET: a discovery platform for the dynamical exploration of human diseases and their genes. Database: The Journal of Biological Databases and Curation, 2015, bav028. https://doi.org/10.1093/database/bav028
 
-[3] Yu G, Wang L, Han Y and He Q (2012). “clusterProfiler: an R package for comparing biological themes among gene clusters.” OMICS: A Journal of Integrative Biology, 16(5), pp. 284-287. http://dx.doi.org/10.1089/omi.2011.0118. 
+[3] Yu G, Wang L, Han Y and He Q (2012). “clusterProfiler: an R package for comparing biological themes among gene clusters.” OMICS: A Journal of Integrative Biology, 16(5), pp. 284-287. https://dx.doi.org/10.1089/omi.2011.0118. 
 
-[4] Yu G, Wang L, Yan G and He Q (2015). “DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis.” Bioinformatics, 31(4), pp. 608-609. http://dx.doi.org/10.1093/bioinformatics/btu684, http://bioinformatics.oxfordjournals.org/content/31/4/608. 
+[4] Yu G, Wang L, Yan G and He Q (2015). “DOSE: an R/Bioconductor package for Disease Ontology Semantic and Enrichment analysis.” Bioinformatics, 31(4), pp. 608-609. https://dx.doi.org/10.1093/bioinformatics/btu684, https://bioinformatics.oxfordjournals.org/content/31/4/608. 
 
 
 

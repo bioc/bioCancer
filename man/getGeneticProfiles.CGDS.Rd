@@ -4,7 +4,7 @@
 \alias{getGeneticProfiles.CGDS}
 \title{S3 method to get Genetic Profiles}
 \usage{
-getGeneticProfiles.CGDS(x, cancerStudy, ...)
+\method{getGeneticProfiles}{CGDS}(x, cancerStudy, ...)
 }
 \arguments{
 \item{x}{connection object}

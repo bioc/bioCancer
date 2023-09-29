@@ -4,7 +4,7 @@
 \alias{getMutationData.CGDS}
 \title{S3 method to ge Mutation Data}
 \usage{
-getMutationData.CGDS(x, caseList, geneticProfile, genes, ...)
+\method{getMutationData}{CGDS}(x, caseList, geneticProfile, genes, ...)
 }
 \arguments{
 \item{x}{connection object}

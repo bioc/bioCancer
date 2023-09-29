@@ -4,7 +4,7 @@
 \alias{processURL.CGDS}
 \title{S3 method to process URL}
 \usage{
-processURL.CGDS(x, url, force.comment.char.blank, ...)
+\method{processURL}{CGDS}(x, url, force.comment.char.blank = FALSE, ...)
 }
 \arguments{
 \item{x}{A connection object}

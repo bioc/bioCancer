@@ -22,7 +22,7 @@
 #' @title Annotation translation functions
 #' @author  Stefan McKinnon Edwards  \email{stefan.hoj-edwards@@agrsci.dk}
 #' @references
-#' \url{http://www.iysik.com/index.php?page=annotation-functions}
+#' \url{https://www.iysik.com/index.php?page=annotation-functions}
 #' @keywords  package
 #' @seealso  \code{\link{translate}}, \code{\link{getOrthologs}}
 #' @examples
@@ -226,7 +226,7 @@ translate <- function(values, from, to=NULL,
 #' When translating to RefSeq, typically multiple identifiers are returned,
 #' referring to different types of products, such as genomic molecule, mature
 #' mRNA or the protein, and they can be predicted, properties that can be read
-#' from the prefix (\url{http://www.ncbi.nlm.nih.gov/refseq/key.html}).  E.g. "XM_" is
+#' from the prefix (\url{https://www.ncbi.nlm.nih.gov/refseq/}).  E.g. "XM_" is
 #' predicted mRNA and "NP_" is a protein. Run \code{?org.Bt.egREFSEQ}.
 #'
 #' @param l  Vector or list of RefSeqs accessions to pick from.  If list given, applies the
@@ -446,7 +446,7 @@ getEvidenceCodes <- function() {
 #' @param ... Additional arguments sent to \code{\link{translate}}.
 #' @return List. Names of list corresponds to \code{values}, except those that could not be mapped nor translated.
 #'               Entries are character vectors.
-#' @references \code{?hom.Hs.inp.db} - \url{http://inparanoid.sbc.su.se/}
+#' @references \code{?hom.Hs.inp.db} - \url{https://inparanoidb.sbc.su.se/}
 #'
 #'  Berglund, A.C., Sjolund, E., Ostlund, G., Sonnhammer, E.L.L. (2008)
 #'  InParanoid 6: eukaryotic ortholog clusters with inparalogs
@@ -533,7 +533,7 @@ getOrthologs <- function(values, mapping, genus, threshold=1,
 #'  Gets the table name from the INPARANOID style genus names.
 #' @param genus 5 character INPARANOID genus name, such as "BOSTA", "HOMSA" or "MUSMU".
 #' @return Table name for genus.
-#' @references \url{http://www.bioconductor.org/packages/release/bioc/html/AnnotationDbi.html}
+#' @references \url{https://www.bioconductor.org/packages/release/bioc/html/AnnotationDbi.html}
 #' @author Stefan McKinnon Edwards \email{stefanm.edwards@@agrsci.dk}
 .getTableName <- function(genus) {
   # Find the AnnotationDbi source

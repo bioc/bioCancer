@@ -4,7 +4,7 @@
 \alias{getCaseLists.CGDS}
 \title{S3 method to get Cases Lists}
 \usage{
-getCaseLists.CGDS(x, cancerStudy,...)
+\method{getCaseLists}{CGDS}(x, cancerStudy, ...)
 }
 \arguments{
 \item{x}{connection object}

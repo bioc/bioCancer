@@ -36,7 +36,7 @@ refseq <- translate(gene.symbols, from=org.Bt.egSYMBOL2EG, to=org.Bt.egREFSEQ)
  pickRefSeq(refseq, priorities=c('NP','XP'), reduce='all')
 }
 \references{
-\url{http://www.iysik.com/index.php?page=annotation-functions}
+\url{https://www.iysik.com/index.php?page=annotation-functions}
 }
 \seealso{
 \code{\link{translate}}, \code{\link{getOrthologs}}

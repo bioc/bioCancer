@@ -4,7 +4,15 @@
 \alias{getProfileData.CGDS}
 \title{S3 method to get Profile Data}
 \usage{
-getProfileData.CGDS(x, genes, geneticProfiles, caseList, cases, caseIdsKey, ...)
+\method{getProfileData}{CGDS}(
+  x,
+  genes,
+  geneticProfiles,
+  caseList = "",
+  cases = c(),
+  caseIdsKey = "",
+  ...
+)
 }
 \arguments{
 \item{x}{connection object}

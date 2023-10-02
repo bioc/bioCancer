@@ -352,7 +352,7 @@ removeNAs <- function(l) { return(l[!is.na(l)]) }
 #' biological process (BP), cellular component (CC), or molecular function (MF).
 #' Can be used on list of GOs from \code{\link{translate}}, or a single list of GOs from an annotation package.
 #' May reduce list, if the (sub)list does not contain the chosen class!
-#' @param l Character vector, or list of, og GO identifiers.
+#' @param l Character vector, or list of GO identifiers.
 #' @param evidence Character vector, filters on which kind of evidence to return; for a larger list see \code{\link{getEvidenceCodes}}. \\*
 #'                 Evidence codes may be: \code{c('IMP','IGI','IPI','ISS','IDA','IEP','IEA','TAS','NAS','ND','IC')}. \\*
 #'				   Leave as \code{NA} to ignore filtering on this part.
@@ -364,13 +364,13 @@ removeNAs <- function(l) { return(l[!is.na(l)]) }
 #' @export
 #' @examples
 #' library(org.Bt.eg.db)
+#' library(GO.db)
 #' genes <- c(280705, 280706, 100327208)
 #' GO <- translate(genes, org.Bt.egGO)
 #' # Get all biological processes:
 #' pickGO(GO, category='BP')
 #' # Get all ontologies with experimental evidence:
 #' pickGO(GO, evidence=c('IMP','IGI','IPI','ISS','IDA','IEP','IEA'))
-#pickGO <- function(l, evidence=c('IMP','IGI','IPI','ISS','IDA','IEP','IEA','TAS','NAS','ND','IC'), category=c('BP','CC','MF')) {
 pickGO <- function(l, evidence=NA, category=NA) {
   evidence <- toupper(evidence)
   category <- toupper(category)

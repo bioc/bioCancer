@@ -364,8 +364,18 @@ removeNAs <- function(l) { return(l[!is.na(l)]) }
 #' @export
 #' @examples
 #' library(org.Bt.eg.db)
-#' library(GO.db)
 #' genes <- c(280705, 280706, 100327208)
+#' translate(genes, org.Bt.egSYMBOL)
+#'
+#' symbols <- c("SERPINA1","KERA","CD5")
+#' refseq <- translate(symbols, from=org.Bt.egSYMBOL2EG, to=org.Bt.egREFSEQ)
+#' # Pick the proteins:
+#' pickRefSeq(refseq, priorities=c('NP','XP'), reduce='all')
+#'
+#' # If you wanted do do some further mapping on the result from
+#' # translate, simply use lapply.
+#'
+#' library(GO.db)
 #' GO <- translate(genes, org.Bt.egGO)
 #' # Get all biological processes:
 #' pickGO(GO, category='BP')

@@ -7,7 +7,7 @@
 pickGO(l, evidence = NA, category = NA)
 }
 \arguments{
-\item{l}{Character vector, or list of, og GO identifiers.}
+\item{l}{Character vector, or list of GO identifiers.}
 
 \item{evidence}{Character vector, filters on which kind of evidence to return; for a larger list see \code{\link{getEvidenceCodes}}. \\*
  Evidence codes may be: \code{c('IMP','IGI','IPI','ISS','IDA','IEP','IEA','TAS','NAS','ND','IC')}. \\*
@@ -28,6 +28,17 @@ May reduce list, if the (sub)list does not contain the chosen class!
 \examples{
 library(org.Bt.eg.db)
 genes <- c(280705, 280706, 100327208)
+translate(genes, org.Bt.egSYMBOL)
+
+symbols <- c("SERPINA1","KERA","CD5")
+refseq <- translate(symbols, from=org.Bt.egSYMBOL2EG, to=org.Bt.egREFSEQ)
+# Pick the proteins:
+pickRefSeq(refseq, priorities=c('NP','XP'), reduce='all')
+
+# If you wanted do do some further mapping on the result from
+# translate, simply use lapply.
+
+library(GO.db)
 GO <- translate(genes, org.Bt.egGO)
 # Get all biological processes:
 pickGO(GO, category='BP')

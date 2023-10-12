@@ -378,9 +378,19 @@ removeNAs <- function(l) { return(l[!is.na(l)]) }
 #' library(GO.db)
 #' GO <- translate(genes, org.Bt.egGO)
 #' # Get all biological processes:
+#' \dontrun{
 #' pickGO(GO, category='BP')
+#'  # $`280705`
+#'  # [1] "GO:0006826" "GO:0006879"
+#'  # $`280706`
+#' # [1] "GO:0006590" "GO:0007165" "GO:0042446"
 #' # Get all ontologies with experimental evidence:
 #' pickGO(GO, evidence=c('IMP','IGI','IPI','ISS','IDA','IEP','IEA'))
+#'  # $`280705`
+#'  # [1] "GO:0006826" "GO:0006879" "GO:0005615" "GO:0008199"
+#'  # $`280706`
+#'  # [1] "GO:0006590" "GO:0007165" "GO:0042446" "GO:0005615" "GO:0005179" "GO:0042393"
+#' }
 pickGO <- function(l, evidence=NA, category=NA) {
   evidence <- toupper(evidence)
   category <- toupper(category)

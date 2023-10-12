@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.29.04 (12 October 2023)
+--------------------------------------------
++ Comment pickGO during running examples: It works manually.
+
 CHANGES IN VERSION 1.29.01 (28 September 2023)
 --------------------------------------------
 + Correct items format in  NEWS file

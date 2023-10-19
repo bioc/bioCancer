@@ -97,10 +97,6 @@ NULL
 #'
 #' library(GO.db)
 #' GO <- translate(genes, org.Bt.egGO)
-#' # Get all biological processes:
-#' pickGO(GO, category='BP')
-#' # Get all ontologies with experimental evidence:
-#' pickGO(GO, evidence=c('IMP','IGI','IPI','ISS','IDA','IEP','IEA'))
 translate <- function(values, from, to=NULL,
                       reduce=c('all','first','last'),
                       return.list = TRUE,

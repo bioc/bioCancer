@@ -7,7 +7,8 @@ context("bioCancer functions\n")
 
 testthat::test_that("cBioPortal connection",
                     {
-                      mycgds <- CGDS("http://www.cbioportal.org/")
+                      #mycgds <- CGDS("http://www.cbioportal.org/")
+                      mycgds <- CGDS("https://www.cbioportal.org/api/v2/api-docs")
                       test(mycgds)
                     })
 

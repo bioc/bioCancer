@@ -1,3 +1,13 @@
+## How to create RDS file reactomeFI.RDS
+
+# download.file("http://cpws.reactome.org/caBigR3WebApp2018/FIsInGene_122718_with_annotations.txt.zip", tmp <- tempfile())
+# db = read.delim(unzip(tmp))
+# OR
+# db <- read.delim("FIsInGene_122718_with_annotations.txt", header = T)
+# saveRDS(db, "ReactomeFI2018.RDS");
+# file.size("xxx.RDS")
+
+
 output$ReactomeHowto <- renderPrint({
   cat("
       1 - Select Gene list from `Portal/Profiles`
@@ -36,14 +46,6 @@ Edges_obj <- reactive({
 
       #r_data[['ReactomeFI']] <- read.csv("https://raw.githubusercontent.com/kmezhoud/ReactomeFI/master/FIsInGene_121514_with_annotations.txt", header=TRUE, sep="\t")
       #r_data[['ReactomeFI']]  <- read.delim("inst/extdata/FIsInGene_121514_with_annotations.txt")
-
-      ## How to create RDS file
-      # download.file("http://cpws.reactome.org/caBigR3WebApp2018/FIsInGene_122718_with_annotations.txt.zip", tmp <- tempfile())
-      # db = read.delim(unzip(tmp))
-      # OR
-      # db <- read.delim("FIsInGene_122718_with_annotations.txt", header = T)
-      # saveRDS(db, "ReactomeFI2018.RDS");
-      # file.size("xxx.RDS")
 
       if ("package:bioCancer" %in% search()) {
         r_data[['ReactomeFI']]  <- readRDS(paste0(system.file(package = "bioCancer"),

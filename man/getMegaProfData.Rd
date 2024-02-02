@@ -2,12 +2,14 @@
 % Please edit documentation in R/getMegaProfData.R
 \name{getMegaProfData}
 \alias{getMegaProfData}
-\title{search and get genetic profiles (CNA,mRNA, Methylation, Mutation...) of gene list upper than 500}
+\title{Search and get genetic profiles (CNA,mRNA, Methylation, Mutation...) of gene list upper than 500}
 \usage{
-getMegaProfData(MegaGeneList, GenProf, Case, Class)
+getMegaProfData(MegaGeneList, Study, GenProf, Case, Class)
 }
 \arguments{
 \item{MegaGeneList}{A list of genes upper than 500}
+
+\item{Study}{Study ID}
 
 \item{GenProf}{genetic profile reference}
 
@@ -19,7 +21,7 @@ getMegaProfData(MegaGeneList, GenProf, Case, Class)
 A data frame with Genetic profile
 }
 \description{
-search and get genetic profiles (CNA,mRNA, Methylation, Mutation...) of gene list upper than 500
+Search and get genetic profiles (CNA,mRNA, Methylation, Mutation...) of gene list upper than 500
 }
 \details{
 See \url{https://github.com/kmezhoud/bioCancer/wiki}

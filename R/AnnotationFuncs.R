@@ -16,9 +16,8 @@
 #' using the Inparanoid databases.
 #' Other functions include functions for selecting Refseqs or Gene Ontologies (GO).
 #'
-#' @name  AnnotationFuncs-package
+#' @name  AnnotationFuncs
 #' @aliases  AnnotationFuncs
-#' @docType  package
 #' @title Annotation translation functions
 #' @author  Stefan McKinnon Edwards  \email{stefan.hoj-edwards@@agrsci.dk}
 #' @references

@@ -8,8 +8,13 @@ context("bioCancer functions\n")
 testthat::test_that("cBioPortal connection",
                     {
                       #mycgds <- CGDS("http://www.cbioportal.org/")
-                      mycgds <- CGDS("https://www.cbioportal.org/api/v2/api-docs")
-                      test(mycgds)
+                      cgds <- cBioPortalData::cBioPortal(
+                        hostname = "www.cbioportal.org",
+                        protocol = "https",
+                        api = "/api/v2/api-docs"
+                      )
+
+                      test.CGDS(cgds)
                     })
 
 testthat::test_that("ReactomeFI connection",
@@ -17,9 +22,6 @@ testthat::test_that("ReactomeFI connection",
                       checkEq <- function(a,b) { if (identical(a,b)) "OK\n" else "FAILED!\n" }
                       source(paste0(system.file(package = "bioCancer"), "/app/tools/bioCancer/getReactomeFUN.R"),
                           local = TRUE)
-                      # install.packages('RCurl')
-                      # install.packages('XML')
-                      # library('Rcurl', 'XML')
                       ReactomeResult <- getReactomeFI(2018, genes = c("TP53","BRCA1"))
                       cat('ReactomeFI connection... ',
                           checkEq(colnames(ReactomeResult), c("first.protein","second.protein"))

@@ -11,6 +11,7 @@
 #' }
 #' @name bioCancer
 #' @docType package
+#' @import cBioPortalData
 #' @import radiant.data
 #' @importFrom utils capture.output read.table tail stack
 #' @importFrom geNetClassifier calculateGenesRanking

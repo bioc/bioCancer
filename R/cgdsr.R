@@ -1,5 +1,4 @@
 library(R.oo)
-
 # .onAttach <- function(libname, pkgname){
 #     packageStartupMessage('Please send questions to cbioportal@googlegroups.com')
 # }

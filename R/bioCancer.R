@@ -36,6 +36,7 @@
 #' @importFrom visNetwork renderVisNetwork visNetwork visNodes visEdges visOptions
 #' @importFrom visNetwork visHierarchicalLayout visExport visLegend visPhysics visNetworkOutput visExport
 #' @importFrom dplyr select
+#' @importFrom tidyr spread
 #' @importFrom methods   new
 #' @import AlgDesign GO.db R.methodsS3 import org.Bt.eg.db shinythemes
 #' @export

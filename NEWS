@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.30.03 (03 February 2024)
+--------------------------------------------
++ update documentatio with new webapi
++ progress in migration
+
 CHANGES IN VERSION 1.30.02 (02 February 2024)
 --------------------------------------------
 + Start migration  of cBioportal tab with the new cBioPortal webAPI

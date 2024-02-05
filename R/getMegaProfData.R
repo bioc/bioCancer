@@ -12,14 +12,18 @@
 #' @param Class indicates the panel ProfData or Mutdata
 #'
 #' @examples
-#' GeneList <- c("ALK", "JAK3", "SHC3","TP53","MYC","PARP")
+#' cgds <- cBioPortal(
+#' hostname = "www.cbioportal.org",
+#' protocol = "https",
+#' api = "/api/v2/api-docs"
+#' )
 #' \dontrun{
-#' cgds <- CGDS("http://www.cbioportal.org/")
-#' listCase_gbm_tcga_pub <- getCaseLists.CGDS(cgds,"gbm_tcga_pub")[,1]
-#' listGenProf_gbm_tcga_pub <- getGeneticProfiles.CGDS(cgds,"gbm_tcga_pub")[,1]
-#'
-#' ProfData_Mut <- grepRef("gbm_tcga_pub_all", listCase_gbm_tcga_pub,
-#'  "gbm_tcga_pub_mutations", listGenProf_gbm_tcga_pub, GeneList, Mut=1)
+#' getDataByGenes( api =  cgds,
+#' studyId = "gbm_tcga_pub",
+#' genes = c("NF1", "TP53", "ABL1"),
+#' by = "hugoGeneSymbol",
+#' molecularProfileIds = "gbm_tcga_pub_mrna"
+#' )
 #'}
 #'@export
 getMegaProfData <- function(MegaGeneList, Study, GenProf, Case, Class){
@@ -72,7 +76,7 @@ getMegaProfData <- function(MegaGeneList, Study, GenProf, Case, Class){
                                    studyId = Study,
                                    genes = SubMegaGeneList,
                                    by = "hugoGeneSymbol",
-                                   molecularProfileIds = "gbm_tcga_pub_mutations"
+                                   molecularProfileIds = GenProf
                        ) , silent=FALSE),"try-error")){
         msgbadGeneList <- "There are some Gene Symbols not supported by cbioportal server"
         #tkmessageBox(message=msgbadGeneList, icon="warning")

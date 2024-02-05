@@ -1,6 +1,6 @@
 Package: bioCancer
 Title: Interactive Multi-Omics Cancers Data Visualization and Analysis
-Version: 1.30.2
+Version: 1.30.3
 Date: 2024-02-02
 Authors@R: person("Karim", "Mezhoud", role=c("aut", "cre"), email="kmezhoud@gmail.com")
 Description: This package is a Shiny App to visualize and analyse interactively
@@ -15,6 +15,7 @@ Imports:
     R.methodsS3,
     DT (>= 0.3),
     dplyr (>= 0.7.2),
+    tidyr,
     shiny (>= 1.0.5),
     AlgDesign (>= 1.1.7.3),
     import (>= 1.1.0),

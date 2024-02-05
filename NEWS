@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.30.04 (05 February 2024)
+--------------------------------------------
++ update ReactomeFI2021.RDS
++ update DisGeNet0223.RDS
 CHANGES IN VERSION 1.30.03 (03 February 2024)
 --------------------------------------------
 + update documentatio with new webapi

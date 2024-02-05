@@ -22,7 +22,7 @@ testthat::test_that("ReactomeFI connection",
                       checkEq <- function(a,b) { if (identical(a,b)) "OK\n" else "FAILED!\n" }
                       source(paste0(system.file(package = "bioCancer"), "/app/tools/bioCancer/getReactomeFUN.R"),
                           local = TRUE)
-                      ReactomeResult <- getReactomeFI(2018, genes = c("TP53","BRCA1"))
+                      ReactomeResult <- getReactomeFI(2021, genes = c("TP53","BRCA1"))
                       cat('ReactomeFI connection... ',
                           checkEq(colnames(ReactomeResult), c("first.protein","second.protein"))
                       )

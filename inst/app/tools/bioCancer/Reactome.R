@@ -49,10 +49,10 @@ Edges_obj <- reactive({
 
       if ("package:bioCancer" %in% search()) {
         r_data[['ReactomeFI']]  <- readRDS(paste0(system.file(package = "bioCancer"),
-                                                  "/extdata/ReactomeFI2018.RDS", sep=""))
+                                                  "/extdata/ReactomeFI2021.RDS", sep=""))
       }else{
         r_data[['ReactomeFI']]  <- readRDS(file.path(paste(getOption("radiant.path.bioCancer"),
-                                                           "/extdata/ReactomeFI2018.RDS", sep="")))
+                                                           "/extdata/ReactomeFI2021.RDS", sep="")))
       }
 
     })
@@ -178,7 +178,7 @@ getAnnoGeneSet_obj <- function(genelist,type, fdr){
     GeneSet_obj <- NULL
   }else{
     ## Query GeneSet Annotation
-    AnnoGeneSet <- queryAnnotateGeneSet(2018, t(genelist) ,type)
+    AnnoGeneSet <- queryAnnotateGeneSet(2021, t(genelist) ,type)
     #AnnoGeneSet_bkp <<- AnnoGeneSet
     if(nrow(AnnoGeneSet)== 0){
       GeneSet_obj <- data.frame(Gene1 = "",

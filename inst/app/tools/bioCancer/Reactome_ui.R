@@ -105,7 +105,7 @@ output$ui_MetSliderHM27 <- renderUI({
 
 
 output$ui_Reactome <- renderUI({
-  updateSelectizeInput(session, 'StudiesIDReactome', choices = Studies[,1],
+  updateSelectizeInput(session, 'StudiesIDReactome', choices = Studies["studyId"],
                        selected = c("brca_tcga","gbm_tcga","lihc_tcga","lusc_tcga"))
 
   tagList(

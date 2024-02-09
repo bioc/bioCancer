@@ -9,15 +9,7 @@ output$MutDataTable <- DT::renderDataTable({
     GeneList <- whichGeneList(input$GeneListID)
 
     ##### Get Mutation Data for selected Case and Genetic Profile
-    if(length(GeneList)>500){
-
-      shiny::withProgress(message = 'loading Mega Mutation Data from cBioPortal server...', value = 1, {
-
-        dat <- getMegaProfData(GeneList,input$GenProfID,input$CasesID, Class="MutData")
-      })
-
-    } else if (inherits(try(#dat <- getMutationData(cgds,input$CasesID, input$GenProfID, GeneList)
-                            dat <- cBioPortalData::getDataByGenes(api = cgds,
+     if (inherits(try(dat <- cBioPortalData::getDataByGenes(api = cgds,
                                                   studyId = input$StudiesID,
                                                   genes = GeneList,
                                                   by = "hugoGeneSymbol",
@@ -30,14 +22,13 @@ output$MutDataTable <- DT::renderDataTable({
     }else{
       shiny::withProgress(message = 'loading Mutation Data from cBioPortal server...', value = 1, {
 
-        #dat <- getMutationData(cgds,input$CasesID, input$GenProfID, GeneList)
         dat <- cBioPortalData::getDataByGenes(api = cgds,
                               studyId = input$StudiesID,
                               genes = GeneList,
                               by = "hugoGeneSymbol",
                               molecularProfileIds = input$GenProfID
         ) %>% .[[1]] |>
-          select(-c(uniqueSampleKey, uniquePatientKey, molecularProfileId, sampleId, studyId))
+          select(-c(uniqueSampleKey, uniquePatientKey, molecularProfileId, patientId, studyId))
 
 
         if(dim(dat)[1]==0){

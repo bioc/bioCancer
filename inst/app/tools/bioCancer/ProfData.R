@@ -13,10 +13,11 @@ output$ProfDataTable <- DT::renderDataTable({
         dat <- getMegaProfData(GeneList,input$GenProfID,input$CasesID, Class="ProfData")
       })
     } else if (inherits(try( #dat <- getProfileData(cgds,GeneList, input$GenProfID,input$CasesID)
-                             dat <- cBioPortalData::getDataByGenes(api =  cgds,
-                                                   studyId = input$StudiesID,
-                                     genes = GeneList,by = "hugoGeneSymbol",
-                                     molecularProfileIds = input$GenProfID
+                dat <- cBioPortalData::getDataByGenes(api =  cgds,
+                                                       studyId = input$StudiesID,
+                                                       genes = GeneList,
+                                                       by = "hugoGeneSymbol",
+                                                       molecularProfileIds = input$GenProfID
                              ),
                              silent=FALSE),"try-error")){
       dat <- as.data.frame("There are some Gene Symbols not supported by cbioportal.
@@ -50,9 +51,10 @@ output$ProfDataTable <- DT::renderDataTable({
       }
     }
 
-    displayTable(dat)%>% DT::formatStyle(names(dat),
-                                         color = DT::styleEqual("Gene List is empty. copy and paste genes from text file (Gene/line) or use gene list from examples.",
-                                                                'red'))#, backgroundColor = 'white', fontWeight = 'bold'
+    displayTable(dat)%>%
+      DT::formatStyle(names(dat),
+      color = DT::styleEqual("Gene List is empty. copy and paste genes from text file (Gene/line) or use gene list from examples.",
+                            'red'))#, backgroundColor = 'white', fontWeight = 'bold'
 
   }
 

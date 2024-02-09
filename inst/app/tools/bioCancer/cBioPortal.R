@@ -29,7 +29,8 @@ output$ui_Cases <- renderUI({
 ## get Genetic Profiles in side bar panel
 output$ui_GenProfs <- renderUI({
   shiny::withProgress(message = 'loading Genetic Profiles from cBioPortal server...', value = 1, {
-    #Sys.sleep(0.25)
+    Sys.sleep(0.25)
+   req(input$StudiesID)
 
   #GeneticProfiles <- getGeneticProfiles.CGDS(cgds,input$StudiesID)[,1]
   GeneticProfiles <- cBioPortalData::molecularProfiles(api = cgds, studyId = input$StudiesID) |>

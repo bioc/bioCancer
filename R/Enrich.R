@@ -45,7 +45,7 @@ attriColorValue <- function(Value, df, colors=c(a,b,c),feet){
 
 #' Attribute Color to Gene
 #' @usage attriColorGene(df)
-#' @param df data frame with mRNA or CNA or mutation frequency or methylation (numeric).
+#' @param df data frame with mRNA or CNA or mutation frequency or methylation (numeric). Without sampleID column.
 #'
 #' @return A list colors for every gene
 #'
@@ -223,9 +223,9 @@ reStrDimension <- function(LIST){
 #' @export
 UnifyRowNames <- function(x, geneList){
   ## compute the ratio of mutation
-  df_MutData <-as.data.frame(table(x$gene_symbol) /sum(table(x$gene_symbol))*100)
+  df_MutData <-as.data.frame(table(x$hugoGeneSymbol) /sum(table(x$hugoGeneSymbol))*100)
   ## compute le sum of mutation using table function.
-  #df_MutData <-as.data.frame(table(x$gene_symbol))
+  #df_MutData <-as.data.frame(table(x$hugoGeneSymbol))
   rownames(df_MutData) <- df_MutData$Var1
   ## ordering genes in MutData as in GeneList
 
@@ -314,7 +314,7 @@ getFreqMutData <- function(list, geneListLabel){
   return(Freq_DfMutData)
 }
 
-#' Chech wich Cases and genetic profiles are available for every seleted study
+#' Check wich Cases and genetic profiles are available for selected study
 #' @usage checkDimensions(panel,StudyID)
 #' @param panel panel can take to strings 'Circomics' or 'Networking'
 #' @param StudyID Study reference using cBioPortal index
@@ -349,7 +349,6 @@ checkDimensions<- function(panel, StudyID){
     ## ger Genetics Profiles for selected Studies
     GenProfsRefStudies <- unname(unlist(apply(as.data.frame(StudyID),
                                           1,function(x) cBioPortalData::molecularProfiles(cgds,x)[,"molecularProfileId"])))
-
   }else if (panel== "Networking"){
 
     checked_Studies <- StudyID #input$StudiesIDReactome
@@ -367,7 +366,7 @@ checkDimensions<- function(panel, StudyID){
                                  "Case_Mut","GeneProf_Mut"
   ) )
 
-  for(i in seq(checked_Studies)){
+  for(i in checked_Studies){
     ### get Cases and Genetic Profiles  with cBioPortal references
     GenProf_CNA<- paste(i,"_gistic", sep="")
     Case_CNA   <- paste(i,"_cna", sep="")
@@ -403,7 +402,6 @@ checkDimensions<- function(panel, StudyID){
       df[2,i] <- "No"
     }
 
-
     if(length(grep(Case_Exp, CasesRefStudies)!=0)){
       df[3,i] <- "Yes"
     }else{
@@ -415,7 +413,6 @@ checkDimensions<- function(panel, StudyID){
     }else{
       df[4,i] <- "No"
     }
-
 
     if(length(grep(Case_Met_HM450, CasesRefStudies)!=0)){
       df[5,i] <- "Yes"
@@ -429,7 +426,6 @@ checkDimensions<- function(panel, StudyID){
       df[6,i] <- "No"
     }
 
-
     if(length(grep(Case_Met_HM27, CasesRefStudies)!=0)){
       df[7,i] <- "Yes"
     }else{
@@ -442,7 +438,6 @@ checkDimensions<- function(panel, StudyID){
       df[8,i] <- "No"
     }
 
-
     if(length(grep(Case_RPPA, CasesRefStudies)!=0)){
       df[9,i] <- "Yes"
     }else{
@@ -454,7 +449,6 @@ checkDimensions<- function(panel, StudyID){
     }else{
       df[10,i] <- "No"
     }
-
 
     if(length(grep(Case_miRNA, CasesRefStudies)!=0)){
       df[11,i] <- "Yes"
@@ -487,8 +481,8 @@ checkDimensions<- function(panel, StudyID){
 
 
 #' get samples size of sequensed genes
-#' @usage getSequensed_SampleSize(StudyID)
-#' @param StudyID Study reference using cBioPortal index
+#' @usage getSequensed_SampleSize(StudiesID)
+#' @param StudiesID Studies ID as a vector
 #'
 #'
 #' @return dataframe with sample size for each selected study.
@@ -499,20 +493,17 @@ checkDimensions<- function(panel, StudyID){
 #' }
 #'
 #' @export
-getSequensed_SampleSize <- function(StudyID){
+getSequensed_SampleSize <- function(StudiesID){
 
-  checked_Studies <- StudyID #input$StudiesIDCircos
   # get Cases for selected Studies
-  dat <-
-    unname(
-      as.data.frame(apply(as.data.frame(paste(checked_Studies, "_sequenced", sep="")), 1,
-                          function(x) nrow(cBioPortalData::clinicalData(cgds, x))))
-    )
+  dat <- apply(as.data.frame(paste0(StudiesID, "_sequenced")), 1,  #input$StudiesIDCircos
+               function(x) nrow(as.data.frame(cBioPortalData::samplesInSampleLists(cgds, x)))) |>
+    as.data.frame()
 
-  rownames(dat) <-  StudyID
+  rownames(dat) <-  StudiesID
   colnames(dat) <- "Samples"
   ## remove rownames to column
-  dat <- dat %>% tibble::rownames_to_column("Studies")
+  #dat <- dat %>% tibble::rownames_to_column("Studies")
 
   return(dat)
 }

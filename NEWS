@@ -250,7 +250,13 @@ FIRST RELEASE
 
 
 PERSPECTIVE
-+ Release R 3.4 import(shiny, except= c("dataTableOutput", "renderDataTable"))
++ Visualize all cases and genetic profiles for studies
+  - Visualize samples SIZE for each cases/genetic profile
+  - for gbm_tcga there are 3 samples size for mRNA expression:
+      o "Samples with mRNA expression data (166 samples)"
+      o "Samples with mRNA expression data (401 samples)"
+      o Samples with mRNA expression data (528 samples)"
+
 + use DisGeNet server despite /extdata/disGeNet file (DONE Not Working)
 + clusterProfiler GMT file:
   - http://www.r-bloggers.com/go-analysis-using-clusterprofiler/

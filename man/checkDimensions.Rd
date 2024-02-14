@@ -4,11 +4,9 @@
 \alias{checkDimensions}
 \title{Check wich Cases and genetic profiles are available for selected study}
 \usage{
-checkDimensions(panel,StudyID)
+checkDimensions(StudyID)
 }
 \arguments{
-\item{panel}{panel can take to strings 'Circomics' or 'Networking'}
-
 \item{StudyID}{Study reference using cBioPortal index}
 }
 \value{

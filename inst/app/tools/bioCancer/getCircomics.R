@@ -214,7 +214,7 @@ output$CircosAvailability <- DT::renderDataTable({
 
   shiny::withProgress(message = 'Loading Data...', value = 1, {
 
-    dat <- checkDimensions(panel="Circomics", StudyID= input$StudiesIDCircos )
+    dat <- checkDimensions(StudyID= input$StudiesIDCircos )
     ## remove rownames to column
     dat <- dat %>% tibble::rownames_to_column("Samples")
 

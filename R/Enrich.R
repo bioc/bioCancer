@@ -315,8 +315,7 @@ getFreqMutData <- function(list, geneListLabel){
 }
 
 #' Check wich Cases and genetic profiles are available for selected study
-#' @usage checkDimensions(panel,StudyID)
-#' @param panel panel can take to strings 'Circomics' or 'Networking'
+#' @usage checkDimensions(StudyID)
 #' @param StudyID Study reference using cBioPortal index
 #'
 #' @return A data frame with two column (Cases, Genetic profiles). Every row has a dimension (CNA, mRNA...).
@@ -339,27 +338,28 @@ getFreqMutData <- function(list, geneListLabel){
 #'}
 #' @export
 #'
-checkDimensions<- function(panel, StudyID){
+checkDimensions <- function(StudyID){
 
-  if(panel == "Circomics"){
+
     checked_Studies <- StudyID #input$StudiesIDCircos
-    # get Cases for selected Studies
-    CasesRefStudies <- unname(unlist(apply(as.data.frame(StudyID),
-                                           1,function(x) cBioPortalData::sampleLists(cgds,x)[,"sampleListId"])))
-    ## ger Genetics Profiles for selected Studies
-    GenProfsRefStudies <- unname(unlist(apply(as.data.frame(StudyID),
-                                          1,function(x) cBioPortalData::molecularProfiles(cgds,x)[,"molecularProfileId"])))
-  }else if (panel== "Networking"){
 
-    checked_Studies <- StudyID #input$StudiesIDReactome
     # get Cases for selected Studies
-    CasesRefStudies <- unname(unlist(apply(as.data.frame(StudyID),
-                                           1,function(x) cBioPortalData::sampleLists(cgds,x)[,"sampleListId"])))
-    ## ger Genetics Profiles for selected Studies
-    GenProfsRefStudies <- unname(unlist(apply(as.data.frame(StudyID),
-                                            1,function(x) cBioPortalData::molecularProfiles(cgds,x)[,"molecularProfileId"])))
+    #CasesRefStudies <- unname(unlist(apply(as.data.frame(StudyID),
+    #                                       1,function(x) cBioPortalData::sampleLists(cgds,x)[,"sampleListId"])))
 
-  }
+    CasesRefStudies <- apply(as.data.frame(StudyID),1,
+                             function(x) cBioPortalData::sampleLists(cgds,x) |>
+                               pull("sampleListId")) |>
+                              as.character()
+
+    ## ger Genetics Profiles for selected Studies
+    #GenProfsRefStudies <- unname(unlist(apply(as.data.frame(StudyID),
+    #                                      1,function(x) cBioPortalData::molecularProfiles(cgds,x)[,"molecularProfileId"])))
+    GenProfsRefStudies <- apply(as.data.frame(StudyID),1,
+                               function(x) cBioPortalData::molecularProfiles(cgds,x) |>
+                                 pull("molecularProfileId")) |>
+                                as.character()
+
 
   df <- data.frame(row.names = c("Case_CNA", "GenProf_GISTIC", "Case_mRNA", "GenProf_mRNA", "Case_Met_HM450", "GenProf_Met_HM450",
                                  "Case_Met_HM27", "GenProf_Met_HM27", "Case_RPPA", "GeneProf_RPPA", "Case_miRNA", "GenProf_miRNA",

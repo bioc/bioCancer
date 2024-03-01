@@ -11,8 +11,10 @@ serviceURL <- function(version){
     serv.url <- paste0(base.url, "caBigR3WebApp2016/FIService/network/")
   } else  if (version == "2017"){
     serv.url <- paste0(base.url, "caBigR3WebApp2017/FIService/network/")
-  } else {
+  } else if (version == "2018"){
     serv.url <- paste0(base.url, "caBigR3WebApp2018/FIService/network/")
+  } else{
+    serv.url <- paste0(base.url, "caBigR3WebApp2021/FIService/network/")
   }
   return(serv.url)
 }

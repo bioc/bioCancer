@@ -1,3 +1,13 @@
+## How to create RDS file reactomeFI.RDS
+
+# download.file("http://cpws.reactome.org/caBigR3WebApp2018/FIsInGene_122718_with_annotations.txt.zip", tmp <- tempfile())
+# db = read.delim(unzip(tmp))
+# OR
+# db <- read.delim("FIsInGene_122718_with_annotations.txt", header = T)
+# saveRDS(db, "ReactomeFI2018.RDS");
+# file.size("xxx.RDS")
+
+
 output$ReactomeHowto <- renderPrint({
   cat("
       1 - Select Gene list from `Portal/Profiles`
@@ -37,20 +47,12 @@ Edges_obj <- reactive({
       #r_data[['ReactomeFI']] <- read.csv("https://raw.githubusercontent.com/kmezhoud/ReactomeFI/master/FIsInGene_121514_with_annotations.txt", header=TRUE, sep="\t")
       #r_data[['ReactomeFI']]  <- read.delim("inst/extdata/FIsInGene_121514_with_annotations.txt")
 
-      ## How to create RDS file
-      # download.file("http://cpws.reactome.org/caBigR3WebApp2018/FIsInGene_122718_with_annotations.txt.zip", tmp <- tempfile())
-      # db = read.delim(unzip(tmp))
-      # OR
-      # db <- read.delim("FIsInGene_122718_with_annotations.txt", header = T)
-      # saveRDS(db, "ReactomeFI2018.RDS");
-      # file.size("xxx.RDS")
-
       if ("package:bioCancer" %in% search()) {
         r_data[['ReactomeFI']]  <- readRDS(paste0(system.file(package = "bioCancer"),
-                                                  "/extdata/ReactomeFI2018.RDS", sep=""))
+                                                  "/extdata/ReactomeFI2021.RDS", sep=""))
       }else{
         r_data[['ReactomeFI']]  <- readRDS(file.path(paste(getOption("radiant.path.bioCancer"),
-                                                           "/extdata/ReactomeFI2018.RDS", sep="")))
+                                                           "/extdata/ReactomeFI2021.RDS", sep="")))
       }
 
     })
@@ -176,7 +178,7 @@ getAnnoGeneSet_obj <- function(genelist,type, fdr){
     GeneSet_obj <- NULL
   }else{
     ## Query GeneSet Annotation
-    AnnoGeneSet <- queryAnnotateGeneSet(2018, t(genelist) ,type)
+    AnnoGeneSet <- queryAnnotateGeneSet(2021, t(genelist) ,type)
     #AnnoGeneSet_bkp <<- AnnoGeneSet
     if(nrow(AnnoGeneSet)== 0){
       GeneSet_obj <- data.frame(Gene1 = "",
@@ -399,14 +401,18 @@ graph_obj <- reactive({
 
   if('Met_HM450' %in% input$NodeAttri_ProfDataID){
 
-    Met_obj <- Node_obj_Met_ProfData(list= r_info$ListProfData$Met_HM450, type ='HM450',input$ThresholdMetHM450ID )
+    Met_obj <- Node_obj_Met_ProfData(list= r_info$ListProfData$Met_HM450,
+                                     type ='HM450',
+                                     input$ThresholdMetHM450ID )
     Edges_obj <- rbind(Edges_obj, Met_obj)
 
   }
 
   if('Met_HM27' %in% input$NodeAttri_ProfDataID ){
 
-    Met_obj <- Node_obj_Met_ProfData(list= r_info$ListProfData$Met_HM27, type='HM27', input$ThresholdMetHM27ID)
+    Met_obj <- Node_obj_Met_ProfData(list= r_info$ListProfData$Met_HM27,
+                                     type='HM27',
+                                     input$ThresholdMetHM27ID)
     Edges_obj <- rbind(Edges_obj, Met_obj)
 
   }

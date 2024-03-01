@@ -1,3 +1,34 @@
+CHANGES IN VERSION 1.30.07 (14 February 2024)
+--------------------------------------------
++ fix issues in Networking Tab
+
+CHANGES IN VERSION 1.30.06 (11 February 2024)
+--------------------------------------------
++ Merge mutation and Genetic Ptofile tabs
+
+CHANGES IN VERSION 1.30.05 (09 February 2024)
+--------------------------------------------
++ rewrite the function getListProfData
++ Omit function getMegaProfData user for genlist upper that 500.
+
+CHANGES IN VERSION 1.30.04 (05 February 2024)
+--------------------------------------------
++ update ReactomeFI2021.RDS
++ update DisGeNet0223.RDS
+
+CHANGES IN VERSION 1.30.03 (03 February 2024)
+--------------------------------------------
++ update documentatio with new webapi
++ progress in migration
+
+CHANGES IN VERSION 1.30.02 (02 February 2024)
+--------------------------------------------
++ Start migration  of cBioportal tab with the new cBioPortal webAPI
+
+CHANGES IN VERSION 1.30.01 (20 January 2024)
+--------------------------------------------
++ Update api link
+
 CHANGES IN VERSION 1.29.05 (19 October 2023)
 --------------------------------------------
 + Comment pickGO during running examples: It works manually.
@@ -223,7 +254,14 @@ FIRST RELEASE
 
 
 PERSPECTIVE
-+ Release R 3.4 import(shiny, except= c("dataTableOutput", "renderDataTable"))
++ Check add interesting genes in networking Tab
++ Visualize all cases and genetic profiles for studies
+  - Visualize samples SIZE for each cases/genetic profile
+  - for gbm_tcga there are 3 samples size for mRNA expression:
+      o "Samples with mRNA expression data (166 samples)"
+      o "Samples with mRNA expression data (401 samples)"
+      o Samples with mRNA expression data (528 samples)"
+
 + use DisGeNet server despite /extdata/disGeNet file (DONE Not Working)
 + clusterProfiler GMT file:
   - http://www.r-bloggers.com/go-analysis-using-clusterprofiler/

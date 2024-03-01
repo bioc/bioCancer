@@ -47,10 +47,13 @@ TableCases <- reactive({
   shiny::withProgress(message = 'loading Sample size...', value = 1, {
 
     checked_Studies <- input$StudiesIDClassifier
-    listCases <- lapply(checked_Studies, function(x) getCaseLists(cgds,x)[,3])
-    #listGenProf <- lapply(checked_Studies, function(x)getGeneticProfiles(cgds,x)[,2])
-    matchedCases <- lapply(listCases, function(x) x[grep("mRNA expression", x)])
-    #matchedGenProf <- lapply(listGenProf, function(x)x[grep("mRNA expression",x)])
+    ## get cases for checked studies and pull only description and sampleLitsId column
+    listCases <- lapply(checked_Studies, function(x)  sampleLists(cgds, x)[,c("description", "sampleListId")] |>
+                          unite(description_sampleListId, c("description", "sampleListId"), sep = "-") |>
+                          pull(description_sampleListId))
+    ## extract only cases with mrna
+    matchedCases <- lapply(listCases, function(x) x[grepl("mrna", x ,ignore.case = TRUE)])
+
     ## remove emply list
     matchedCases <- matchedCases[lapply(matchedCases,length)>0]
     #matchedGenProf <- matchedGenProf[lapply(matchedGenProf,length)>0]
@@ -61,11 +64,13 @@ TableCases <- reactive({
     }else if (length(checked_Studies) > length(matchedCases)){
       dat <- as.data.frame('Some selected study does not have mRNA data. Select only study with mRNA data.')
     }else{
-      #  dat <- data.frame(Studies=NA,Case=NA, GenProf=NA)
-      dat <- data.frame(Studies=NA,Cases=NA)
-      for(s in 1:length(matchedCases)){
-        dat <- rbind(dat, c(checked_Studies[s], matchedCases[[s]]))
-        #dat[s,] <- c(checked_Studies[s], matchedCases[[s]], matchedGenProf[[s]])
+      dat <- NULL
+      for(s in seq(matchedCases)){
+
+        samples <- paste(checked_Studies[s], matchedCases[[s]], sep="-")|>
+          as_tibble() |>
+          separate(col = value, into = c("Study", "description", "sampleListId"),sep =  "-")
+        dat <- rbind(dat, samples)
       }
     }
     return(dat)
@@ -76,8 +81,8 @@ TableCases <- reactive({
 output$viewTableCases <- DT::renderDataTable({
   dat <-   TableCases()
   displayTable(dat) %>% DT::formatStyle(names(dat),
-                                        color = DT::styleEqual('Check Cases for selected studies. Some ones do not have samples of mRNA expression.',
-                                                               'red'))#, backgroundColor = 'white', fontWeight = 'bold'
+                  color = DT::styleEqual('Check Cases for selected studies. Some ones do not have samples of mRNA expression.',
+                                        'red'))#, backgroundColor = 'white', fontWeight = 'bold'
 
 })
 
@@ -140,13 +145,49 @@ output$Plot_enricher <- renderPlot({
     # saveRDS(db, "DisGeNet0918.RDS")
     # str(readRDS("DisGeNet0918.RDS))
 
+    ## use disgenet2r package to get last version
+    # install manually SPARKL from archive https://cran.r-project.org/src/contrib/Archive/SPARQL/
+    # install disgenet2r from bitbuket
+    # library(devtools)
+    # install_bitbucket("ibi_group/disgenet2r")
+    # get all gene list from Gene Association Tab: https://www.disgenet.org/downloads
+    # Extract only Gene list
+    # DisGeNet_2023 <- read.csv2("~/Downloads/gene_associations.tsv", header = TRUE, sep = "\t")
+    # geneList <- DisGeNet_2023$geneSymbol
+    # libsrary(disgenet2r)
+    # disgenet_api_key <-get_disgenet_api_key(email = "kmezhoud@gmail.com", password = "$Chocolat01", verbose = FALSE, warnings = TRUE)
+
+    # get_all_gene_disease_association <- function(genelist){
+    #   gene2disease(
+    #     genelist,
+    #     vocabulary = "HGNC",
+    #     database = "CURATED",
+    #     score = c(0, 1),
+    #     api_key = disgenet_api_key,
+    #     verbose = FALSE,
+    #     warnings = FALSE
+    #   )
+    # }
+    #
+    # map_output <- purrr::map(split(geneList,
+    #                                ceiling(seq_along(geneList)/500)),
+    #                          get_all_gene_disease_association)
+    #
+    # # remove umpty elemnt in list
+    # map_output <- map_output[lapply(map_output,class)=='DataGeNET.DGN']
+    #
+    # # extract slot qresult from a list and  merge them in dataframe
+    # DisGeNet2023  <- plyr::ldply(map_output, slot, "qresult") |>
+    #   dplyr::select(geneid, gene_symbol, diseaseid, disease_name ) |>
+    #   dplyr::rename(geneId = geneid, geneSymbol = gene_symbol, diseaseId= diseaseid, diseaseName = disease_name)
+
 
     ## download DisGeNet.RDS file from ubuntu/kmezhoud/bioCancer
     if(is.null(r_data$gda)){
       shiny::withProgress(message = 'Loading DisGeNet.RDS...', value = 1, {
 
         #download.file("https://wiki.ubuntu.com/kmezhoud/bioCancer?action=AttachFile&do=get&target=DisGeNet.RDS",tmp <- tempfile())
-        download.file("https://github.com/kmezhoud/bioCancer/raw/master/inst/extdata/DisGeNet0918.RDS",tmp <- tempfile())
+        download.file("https://github.com/kmezhoud/bioCancer/raw/master/inst/extdata/DisGeNet0223.RDS",tmp <- tempfile())
         gda <- readRDS(tmp)
         r_data[['gda']] <- gda
 
